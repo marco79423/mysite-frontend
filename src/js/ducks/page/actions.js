@@ -1,5 +1,5 @@
 import {createAction} from 'redux-actions'
-
+import fetch from 'isomorphic-fetch'
 
 export const setPages = createAction('SET_PAGES', pages => pages)
 

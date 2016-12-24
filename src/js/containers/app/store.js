@@ -14,7 +14,8 @@ const stateTransformer = (state) => {
   else return state
 }
 
-const initialState = Immutable.Map()
+
+const initialState = Immutable.fromJS(window.__PRELOADED_STATE__)
 const store = createStore(
   reducer,
   initialState,

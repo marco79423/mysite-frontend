@@ -2,7 +2,7 @@ import moment from 'moment'
 import {createAction} from 'redux-actions'
 import sortBy from 'lodash/sortBy'
 import reverse from 'lodash/reverse'
-
+import fetch from 'isomorphic-fetch'
 
 export const setArticles = createAction('SET_ARTICLES', articles => articles)
 
