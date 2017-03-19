@@ -12,7 +12,7 @@ export const SITE_META = {
 
   'fb:admins': '100000038752074',
   'fb:fb:app_id': '165574263590380',
-  'google-site-verification': 'Pid5nZRF1G0qE8W87MdFt6C5oQT8OIWRREXIxuWjik4'
+  'google-site-verification': 'vVs2QVhF9I_65-WfH-RD2klXRwNA5hJT1VbICZv-0ZA'
 }
 
 export const SITE_LINK = {
@@ -50,3 +50,6 @@ export const PAGE_SIZE = 10
 export const COMMENT_CONFIG = {
   shortName: 'marco79423'
 }
+
+export const SITE_VERSION = ""  // eslint-disable-line
+export const SITE_UPDATED_TIME = ""  // eslint-disable-line
