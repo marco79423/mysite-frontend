@@ -5,25 +5,25 @@ import { argv } from 'yargs'
 import webpack from 'webpack'
 import webpackMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
-import 'isomorphic-fetch';
+import 'isomorphic-fetch'
 import React from 'react'
-import {RouterContext, match} from 'react-router'
+import { match, RouterContext } from 'react-router'
 import createMemoryHistory from 'history/createMemoryHistory'
-import {Provider} from 'react-redux'
-import ReactDOMServer from 'react-dom/server';
+import { Provider } from 'react-redux'
+import ReactDOMServer from 'react-dom/server'
 import webpackConfig from '../../webpack.config.client'
 import Helmet from 'react-helmet'
 
-import {createRoutes} from '../common/routes'
-import {configureStore} from '../common/store'
+import * as config from '../config/server'
+import { createRoutes } from '../common/routes'
+import { configureStore } from '../common/store'
 import * as articleActions from '../common/ducks/article/actions'
 import * as pageActions from '../common/ducks/page/actions'
 
-import {renderHtmlPage} from './html-render'
-
+import { renderHtmlPage } from './htmlRender'
 
 const app = express()
-const port = +argv.port || 3000
+const port = +argv.port || config.DEFAULT_PORT
 
 if (process.env.DEBUG) {
   const compiler = webpack(webpackConfig)
@@ -66,7 +66,7 @@ app.get('*', (req, res) => {
               <RouterContext {...renderProps} />
             </Provider>
           )
-          const head = Helmet.rewind()
+          const head = Helmet.renderStatic()
           res.status(200).send(renderHtmlPage(html, head, store.getState()))
         })
     } else {
