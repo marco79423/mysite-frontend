@@ -1,11 +1,8 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
-
-import * as configSelectors from '../../ducks/config/selectors'
 
 import styles from './SiteInfo.scss'
 
-export class SiteInfo extends React.Component {
+export default class SiteInfo extends React.Component {
   static PropTypes = {
     version: React.PropTypes.string.isRequired,
     updatedTime: React.PropTypes.string.isRequired
@@ -33,16 +30,3 @@ export class SiteInfo extends React.Component {
     )
   }
 }
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    version: configSelectors.getSiteVersion(state),
-    updatedTime: configSelectors.getSiteUpdatedTime(state)
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {}
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(SiteInfo)

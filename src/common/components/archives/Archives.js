@@ -1,29 +1,18 @@
 import * as React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import { connect } from 'react-redux'
 import { Link } from 'react-router'
-
-import * as articleActions from '../../ducks/article/actions'
-import * as articleSelectors from '../../ducks/article/selectors'
 
 import styles from './Archives.scss'
 
-export class Archives extends React.Component {
+export default class Archives extends React.Component {
   static PropTypes = {
     articles: ImmutablePropTypes.listOf(
       ImmutablePropTypes.contains({
-        slug: React.PropTypes.string,
-        title: React.PropTypes.string,
+        slug: React.PropTypes.string.isRequired,
+        title: React.PropTypes.string.isRequired,
         date: React.PropTypes.any.isRequired
       })
-    ),
-    fetchArticles: React.PropTypes.func
-  }
-
-  componentWillMount () {
-    if (this.props.articles.isEmpty()) {
-      this.props.fetchArticles()
-    }
+    )
   }
 
   render () {
@@ -55,17 +44,3 @@ export class Archives extends React.Component {
     )
   }
 }
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    articles: articleSelectors.getAllArticles(state, ownProps)
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchArticles: () => dispatch(articleActions.fetchArticles())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Archives)

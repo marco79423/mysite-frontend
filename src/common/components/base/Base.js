@@ -1,25 +1,21 @@
 import * as React from 'react'
-import { connect } from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
-import SiteHead from '../../components/site-head'
-import Header from '../../components/header'
-import Nav from '../../components/nav'
-import Sidebar from '../../components/sidebar'
-import Content from '../../components/content'
-import Footer from '../../components/footer'
-
-import * as articleSelectors from '../../ducks/article/selectors'
-import * as siteSelectors from '../../ducks/site/selectors'
+import SiteHead from '../site-head'
+import Header from '../header'
+import Nav from '../nav'
+import Sidebar from '../sidebar'
+import Content from '../content'
+import Footer from '../footer'
 
 import 'normalize.css/normalize.css'
 import styles from './Base.scss'
 
-class Base extends React.Component {
+export default class Base extends React.Component {
   static PropTypes = {
     siteConfig: ImmutablePropTypes.map.isRequired,
     config: ImmutablePropTypes.map.isRequired,
-    recentArticles: ImmutablePropTypes.list
+    recentArticles: ImmutablePropTypes.list.isRequired
   }
 
   render () {
@@ -52,18 +48,3 @@ class Base extends React.Component {
     )
   }
 }
-
-const mapStateToProps = (state, props) => {
-  return {
-    config: state.get('config'),
-    siteConfig: siteSelectors.getSiteHeadConfig(state, props),
-    recentArticles: articleSelectors.getRecentArticles(state, props)
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Base)
