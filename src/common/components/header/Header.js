@@ -1,15 +1,15 @@
-import * as React from 'react'
-import {Link} from 'react-router'
+import React from 'react'
+import PropTypes from 'prop-types'
+import { Link } from 'react-router'
 
 import styles from './Header.scss'
 
-
-export default class Header extends React.Component {
+export default class Header extends React.PureComponent {
   static PropTypes = {
-    siteName: React.PropTypes.string.isRequired
+    siteName: PropTypes.string.isRequired
   }
 
-  render() {
+  render () {
     return (
       <div className={styles.root}>
         <div className={styles.logo}/>

@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import SiteHead from '../site-head'
@@ -11,7 +11,7 @@ import Footer from '../footer'
 import 'normalize.css/normalize.css'
 import styles from './Base.scss'
 
-export default class Base extends React.Component {
+export default class Base extends React.PureComponent {
   static PropTypes = {
     siteConfig: ImmutablePropTypes.map.isRequired,
     config: ImmutablePropTypes.map.isRequired,

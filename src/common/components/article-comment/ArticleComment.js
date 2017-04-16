@@ -1,8 +1,8 @@
-import * as React from 'react'
+import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import ReactDisqusThread from 'react-disqus-comments'
 
-export default class ArticleComment extends React.Component {
+export default class ArticleComment extends React.PureComponent {
   static PropTypes = {
     config: ImmutablePropTypes.map
   }

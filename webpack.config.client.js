@@ -6,10 +6,7 @@ const commonConfig = require('./webpack.config.common')
 const DEBUG = (process.env.NODE_ENV !== 'production')
 
 module.exports = {
-  entry: [
-    'babel-polyfill',
-    './src/client/main.js'
-  ].concat(DEBUG ? [
+  entry: ['./src/client/main.js'].concat(DEBUG ? [
     'webpack-hot-middleware/client'
   ] : []),
   output: {
@@ -17,8 +14,11 @@ module.exports = {
     path: path.join(__dirname, 'dist'),
     filename: 'assets/bundle.js'
   },
-  module: {
-    rules: commonConfig.rules
+  module: commonConfig.module,
+  resolve: {
+    alias: {
+      'immutable$': path.join(__dirname, 'node_modules/immutable/dist/immutable.min.js')
+    }
   },
   plugins: commonConfig.plugins.concat(DEBUG ? [
     new webpack.HotModuleReplacementPlugin(),

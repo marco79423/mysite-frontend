@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Link } from 'react-router'
 
@@ -10,14 +11,14 @@ import ArticleComment from '../article-comment'
 
 import styles from './Article.scss'
 
-export default class ArticleContainer extends React.Component {
+export default class ArticleContainer extends React.PureComponent {
   static PropTypes = {
     siteConfig: ImmutablePropTypes.map.isRequired,
     article: ImmutablePropTypes.contains({
-      slug: React.PropTypes.string.isRequired,
-      title: React.PropTypes.string.isRequired,
-      content: React.PropTypes.content,
-      rawSummary: React.PropTypes.string
+      slug: PropTypes.string.isRequired,
+      title: PropTypes.string.isRequired,
+      content: PropTypes.content,
+      rawSummary: PropTypes.string
     }),
     socialConfig: ImmutablePropTypes.map.isRequired,
     commentConfig: ImmutablePropTypes.map.isRequired

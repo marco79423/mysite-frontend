@@ -1,16 +1,18 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Link } from 'react-router'
+import dateformat from 'dateformat'
 
 import styles from './Archives.scss'
 
-export default class Archives extends React.Component {
+export default class Archives extends React.PureComponent {
   static PropTypes = {
     articles: ImmutablePropTypes.listOf(
       ImmutablePropTypes.contains({
-        slug: React.PropTypes.string.isRequired,
-        title: React.PropTypes.string.isRequired,
-        date: React.PropTypes.any.isRequired
+        slug: PropTypes.string.isRequired,
+        title: PropTypes.string.isRequired,
+        date: PropTypes.any.isRequired
       })
     )
   }
@@ -31,7 +33,7 @@ export default class Archives extends React.Component {
             <tbody>
             {articles.map(article => (
               <tr key={article.get('slug')}>
-                <td>{article.get('date').format('YYYY/MM/DD')}</td>
+                <td>{dateformat(article.get('date'), 'yyyy/mm/dd')}</td>
                 <td>
                   <Link className={styles.link} to={`/articles/${article.get('slug')}/`}>{article.get('title')}</Link>
                 </td>

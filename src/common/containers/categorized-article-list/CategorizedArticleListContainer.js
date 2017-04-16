@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { connect } from 'react-redux'
 
@@ -8,20 +9,31 @@ import * as articleActions from '../../ducks/article/actions'
 import * as articleSelectors from '../../ducks/article/selectors'
 import * as configSelectors from '../../ducks/config/selectors'
 
-export class CategorizedArticleList extends React.Component {
+@connect(
+  (state, ownProps) => ({
+    category: ownProps.params.category,
+    articles: articleSelectors.getArticlesByCategory(state, ownProps),
+    pageSize: configSelectors.getPageSize(state, ownProps),
+    pageNum: +ownProps.params.pageNum || 1
+  }),
+  dispatch => ({
+    fetchArticles: () => dispatch(articleActions.fetchArticles())
+  })
+)
+export default class CategorizedArticleList extends React.Component {
   static propTypes = {
-    category: React.PropTypes.string.isRequired,
+    category: PropTypes.string.isRequired,
     articles: ImmutablePropTypes.listOf(
       ImmutablePropTypes.contains({
-        slug: React.PropTypes.string,
-        title: React.PropTypes.string,
-        summary: React.PropTypes.string
+        slug: PropTypes.string,
+        title: PropTypes.string,
+        summary: PropTypes.string
       })
     ).isRequired,
-    pageNum: React.PropTypes.number.isRequired,
-    pageSize: React.PropTypes.number.isRequired,
+    pageNum: PropTypes.number.isRequired,
+    pageSize: PropTypes.number.isRequired,
 
-    fetchArticles: React.PropTypes.func.isRequired
+    fetchArticles: PropTypes.func.isRequired
   }
 
   componentWillMount () {
@@ -46,20 +58,3 @@ export class CategorizedArticleList extends React.Component {
     )
   }
 }
-
-const mapStateToProps = (state, ownProps) => {
-  return {
-    category: ownProps.params.category,
-    articles: articleSelectors.getArticlesByCategory(state, ownProps),
-    pageSize: configSelectors.getPageSize(state, ownProps),
-    pageNum: +ownProps.params.pageNum || 1
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchArticles: () => dispatch(articleActions.fetchArticles())
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(CategorizedArticleList)

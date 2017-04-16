@@ -1,14 +1,16 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Link } from 'react-router'
+import dateformat from 'dateformat'
 
 import styles from './ArticleMeta.scss'
 
-export default class ArticleMeta extends React.Component {
+export default class ArticleMeta extends React.PureComponent {
   static PropTypes = {
     categories: ImmutablePropTypes.list,
-    date: React.PropTypes.any.isRequired,
-    modifiedDate: React.PropTypes.any
+    date: PropTypes.any.isRequired,
+    modifiedDate: PropTypes.any
   }
 
   render () {
@@ -24,8 +26,8 @@ export default class ArticleMeta extends React.Component {
         )) }
         </span>
         <span className={styles.field}>作者：兩大類</span>
-        <span className={styles.field}>發表時間：{ date.format('YYYY/MM/DD') }</span>
-        {modifiedDate && <span className={styles.field}>最後更新：{ modifiedDate.format('YYYY/MM/DD') }</span>}
+        <span className={styles.field}>發表時間：{dateformat(date, 'yyyy/mm/dd')}</span>
+        {modifiedDate && <span className={styles.field}>最後更新：{dateformat(modifiedDate, 'yyyy/mm/dd')}</span>}
       </div>
     )
   }

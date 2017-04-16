@@ -1,10 +1,11 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 
 import styles from './ArticleContent.scss'
 
-export default class ArticleContent extends React.Component {
+export default class ArticleContent extends React.PureComponent {
   static PropTypes = {
-    content: React.PropTypes.string.isRequired
+    content: PropTypes.string.isRequired
   }
 
   render () {

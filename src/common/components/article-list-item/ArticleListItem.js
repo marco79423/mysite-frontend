@@ -1,4 +1,5 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Link } from 'react-router'
 
@@ -7,11 +8,11 @@ import ArticleContent from '../article-content'
 
 import styles from './ArticleListItem.scss'
 
-export default class ArticleListItem extends React.Component {
+export default class ArticleListItem extends React.PureComponent {
   static PropTypes = {
     article: ImmutablePropTypes.contains({
-      title: React.PropTypes.string.isRequired,
-      summary: React.PropTypes.string
+      title: PropTypes.string.isRequired,
+      summary: PropTypes.string
     })
   }
 

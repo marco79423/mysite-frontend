@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 import { Link } from 'react-router'
 
@@ -7,7 +7,7 @@ import RecentArticles from '../recent-articles'
 
 import styles from './Sidebar.scss'
 
-export default class Sidebar extends React.Component {
+export default class Sidebar extends React.PureComponent {
   static PropTypes = {
     aboutMeConfig: ImmutablePropTypes.map.isRequired,
     recentArticles: ImmutablePropTypes.list

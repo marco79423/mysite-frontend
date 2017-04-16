@@ -1,15 +1,16 @@
-import * as React from 'react'
+import React from 'react'
+import PropTypes from 'prop-types'
 import range from 'lodash/range'
 import classNames from 'classnames'
 import { Link } from 'react-router'
 
 import styles from './Pagination.scss'
 
-export default class Pagination extends React.Component {
+export default class Pagination extends React.PureComponent {
   static propTypes = {
-    current: React.PropTypes.number.isRequired,
-    max: React.PropTypes.number.isRequired,
-    makeLink: React.PropTypes.func.isRequired
+    current: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired,
+    makeLink: PropTypes.func.isRequired
   }
 
   render () {
