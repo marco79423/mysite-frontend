@@ -1,5 +1,6 @@
 import * as Immutable from 'immutable'
 import { createSelector } from 'reselect'
+import get from 'lodash/get'
 
 import * as configSelectors from '../config/selectors'
 import * as routingSelectors from '../routing/selectors'
@@ -18,8 +19,8 @@ export const getArticles = (state) => state
 
 export const getArticlesByCategory = createSelector(
   [
-    (state, props) => props.params.category,
-    getArticles,
+    (state, props) => get(props, 'params.category') || get(props, 'category'),
+    getArticles
   ],
   (category, articles) => articles.filter(article => article
     .get('categories')
@@ -49,6 +50,6 @@ export const getSocialConfig = createSelector(
   ],
   (currentUrl, article) => Immutable.Map({
     shareUrl: currentUrl,
-    title: article.get('title')
+    title: article ? article.get('title') : currentUrl
   })
 )

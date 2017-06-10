@@ -1,6 +1,6 @@
 import React from 'react'
 import ImmutablePropTypes from 'react-immutable-proptypes'
-import ReactDisqusThread from 'react-disqus-comments'
+import Disqus from './Disqus'
 
 export default class ArticleComment extends React.PureComponent {
   static PropTypes = {
@@ -8,10 +8,11 @@ export default class ArticleComment extends React.PureComponent {
   }
 
   render () {
+    if (!this.props.config) {
+      return <div/>
+    }
     return (
-      <ReactDisqusThread
-        shortname={this.props.config.get('shortName')}
-      />
+      <Disqus shortname={this.props.config.get('shortName')}/>
     )
   }
 }

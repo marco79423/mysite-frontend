@@ -1,33 +1,34 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import ImmutablePropTypes from 'react-immutable-proptypes'
 
 import Base from '../../components/base'
 
-import * as articleSelectors from '../../ducks/article/selectors'
 import * as siteSelectors from '../../ducks/site/selectors'
+import * as configSelectors from '../../ducks/config/selectors'
 
 @connect(
   (state, props) => ({
-    config: state.get('config'),
     siteConfig: siteSelectors.getSiteHeadConfig(state, props),
-    recentArticles: articleSelectors.getRecentArticles(state, props)
+    siteName: configSelectors.getSiteName(state, props),
+    menuItems: configSelectors.getMenuItems(state, props),
+    crazyMode: state.getIn(['lab', 'crazyMode']),
+    category: props.params.category,
   })
 )
 export default class BaseContainer extends React.Component {
   static PropTypes = {
     siteConfig: ImmutablePropTypes.map.isRequired,
-    config: ImmutablePropTypes.map.isRequired,
-    recentArticles: ImmutablePropTypes.list
+    siteName: PropTypes.string.isRequired,
+    menuItems: ImmutablePropTypes.map.isRequired,
+    category: PropTypes.string
   }
 
   render () {
-    const {config, siteConfig, recentArticles} = this.props
+    const props = this.props
     return (
-      <Base
-        siteConfig={siteConfig}
-        config={config}
-        recentArticles={recentArticles}>
+      <Base {...props}>
         {this.props.children}
       </Base>
     )

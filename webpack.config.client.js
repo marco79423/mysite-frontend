@@ -6,13 +6,13 @@ const commonConfig = require('./webpack.config.common')
 const DEBUG = (process.env.NODE_ENV !== 'production')
 
 module.exports = {
-  entry: ['./src/client/main.js'].concat(DEBUG ? [
+  entry: ['./src/client/index.js'].concat(DEBUG ? [
     'webpack-hot-middleware/client'
   ] : []),
   output: {
-    publicPath: '/',
-    path: path.join(__dirname, 'dist'),
-    filename: 'assets/bundle.js'
+    publicPath: '/assets/',
+    path: path.join(__dirname, 'dist', 'assets'),
+    filename: 'bundle.js'
   },
   module: commonConfig.module,
   resolve: {

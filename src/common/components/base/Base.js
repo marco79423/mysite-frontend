@@ -1,39 +1,53 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import ImmutablePropTypes from 'react-immutable-proptypes'
+import { Link } from 'react-router'
+
+import AboutMeContainer from '../../containers/about-me'
+import RecentArticlesContainer from '../../containers/recent-articles'
 
 import SiteHead from '../site-head'
 import Header from '../header'
 import Nav from '../nav'
-import Sidebar from '../sidebar'
 import Content from '../content'
 import Footer from '../footer'
 
 import 'normalize.css/normalize.css'
 import styles from './Base.scss'
 
-export default class Base extends React.PureComponent {
+export default class Base extends React.Component {
   static PropTypes = {
     siteConfig: ImmutablePropTypes.map.isRequired,
-    config: ImmutablePropTypes.map.isRequired,
-    recentArticles: ImmutablePropTypes.list.isRequired
+    siteName: PropTypes.string.isRequired,
+    menuItems: ImmutablePropTypes.map.isRequired,
+    crazyMode: PropTypes.bool.isRequired,
+    category: PropTypes.string
   }
 
   render () {
-    const {config, siteConfig, recentArticles} = this.props
+    const {siteConfig, menuItems, siteName, crazyMode, category} = this.props
     return (
       <div className={styles.root}>
         <SiteHead config={siteConfig}/>
 
         <div className={styles.header}>
-          <Header siteName={config.get('SITE_NAME')}/>
+          <Header siteName={siteName} crazyMode={crazyMode}/>
         </div>
         <div className={styles.nav}>
-          <Nav leftMenuItems={config.get('LEFT_MENU_ITEMS')} rightMenuItems={config.get('RIGHT_MENU_ITEMS')}/>
+          <Nav menuItems={menuItems}/>
         </div>
 
         <div className={styles.main}>
           <div className={styles.sidebar}>
-            <Sidebar aboutMeConfig={config.get('ABOUT_ME')} recentArticles={recentArticles}/>
+            <div className={styles.sidebarInside}>
+              <AboutMeContainer/>
+              <div className={styles.otherPart}>
+                <RecentArticlesContainer category={category}/>
+                <div className={styles.archive}>
+                  <Link className={styles.link} to='/articles/archives/'>所有文章列表</Link>
+                </div>
+              </div>
+            </div>
           </div>
           <div className={styles.content}>
             <Content>
