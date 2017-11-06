@@ -1,6 +1,6 @@
 {
   "name": "mysite-frontend",
-  "version": "2017.10.5",
+  "version": "2017.11.6",
   "description": "兩大類的個人網站",
   "author": "兩大類 <marco79423@gmail.com>",
   "repository": {
@@ -41,6 +41,7 @@
     "react-test-renderer": "^15.4.2",
     "rimraf": "https://registry.npmjs.org/rimraf/-/rimraf-2.6.1.tgz",
     "sass-loader": "^6.0.3",
+    "svg-url-loader": "^2.2.0",
     "url-loader": "^0.5.8",
     "webpack": "^2.4.1",
     "webpack-dev-middleware": "^1.10.1",
