@@ -1,12 +1,20 @@
 const webpack = require('webpack')
 const path = require('path')
 
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-
 const DEBUG = (process.env.NODE_ENV !== 'production')
 
-const myCSS = new ExtractTextPlugin({filename: 'styles/styles.css', publicPath: '/assets/styles/'})
-const vendorCSS = new ExtractTextPlugin({filename: 'styles/vendor.css', publicPath: '/assets/styles/'})
+const plugins = [
+  new webpack.DefinePlugin({
+    'process.env': {
+      NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+      DEBUG: DEBUG
+    }
+  })
+]
+
+if (!DEBUG) {
+  plugins.push(new webpack.optimize.ModuleConcatenationPlugin())
+}
 
 module.exports = {
   module: {
@@ -14,29 +22,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: path.join(__dirname, 'src'),
-        use: (DEBUG ? ['react-hot-loader'] : []).concat(['babel-loader'])
-      },
-      {
-        test: /\.css|\.scss$/,
-        include: path.resolve(__dirname, 'src'),
-        use: myCSS.extract({
-          use: [
-            {
-              loader: 'css-loader',
-              options: {
-                modules: true
-              }
-            },
-            'sass-loader'
-          ]
-        })
-      },
-      {
-        test: /\.css$/,
-        exclude: path.resolve(__dirname, 'src'),
-        use: vendorCSS.extract({
-          use: 'css-loader'
-        })
+        loader: 'babel-loader'
       },
       {
         test: /\.(png|jpg|ico)/,
@@ -53,14 +39,5 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    vendorCSS,
-    myCSS,
-    new webpack.DefinePlugin({
-      'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-        DEBUG: DEBUG
-      }
-    })
-  ]
+  plugins: plugins
 }
