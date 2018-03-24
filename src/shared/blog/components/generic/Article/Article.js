@@ -12,7 +12,7 @@ import ArticleComment from './ArticleComment'
 
 
 const Base = styled.article`
-  background: white;
+  background: ${props => props.theme.page.main.content.article.background};
   padding: 32px;
 `
 
@@ -35,6 +35,7 @@ export default class Article extends React.PureComponent {
         slug: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired
       })).isRequired,
+      chickenCount: PropTypes.number.isRequired,
       date: PropTypes.instanceOf(Date).isRequired,
       modifiedDate: PropTypes.instanceOf(Date),
       content: PropTypes.any.isRequired,
@@ -59,6 +60,7 @@ export default class Article extends React.PureComponent {
     return (
       <Metadata
         categories={article.get('categories')}
+        chickenCount={article.get('chickenCount')}
         date={article.get('date')}
         modifiedDate={article.get('modifiedDate')} />
     )

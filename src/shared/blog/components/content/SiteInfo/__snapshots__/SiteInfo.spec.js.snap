@@ -21,12 +21,13 @@ exports[`It should render SiteInfo component correctly 1`] = `
 }
 
 .c3 {
-  color: #388ca8;
+  color: #0097A7;
+  -webkit-text-decoration: none;
   text-decoration: none;
 }
 
 .c3:hover {
-  color: #065a76;
+  color: #006064;
 }
 
 .c2 {
