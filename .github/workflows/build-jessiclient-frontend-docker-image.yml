@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - jessiclient-frontend@*
+    branches:
+      - jessiclient/**
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -28,14 +30,14 @@ jobs:
           echo "::env VERSION=${VERSION}"
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
-      - name: Build jessiclient frontend image
+      - name: Build jessiclient-frontend image
+        working-directory: ./src/apps/jessiclient-frontend
         run: |
           docker build \
-          --file src/apps/jessiclient-frontend/Dockerfile \
           --tag marco79423/jessiclient-frontend:latest \
           .
 
-      - name: Push frontend image
+      - name: Push jessiclient-frontend image
         run: |
           echo "::env VERSION=${{env.VERSION}}"
 
