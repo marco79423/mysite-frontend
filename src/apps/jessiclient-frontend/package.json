@@ -1,0 +1,44 @@
+{
+  "name": "jessiclient-frontend",
+  "version": "1.2.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 9000",
+    "build": "next build",
+    "start": "next start",
+    "storybook": "start-storybook -p 6006 -s ./public",
+    "build-storybook": "build-storybook"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.12.3",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "@react-spring/web": "^9.2.4",
+    "@reduxjs/toolkit": "^1.5.0",
+    "axios": "^0.21.1",
+    "file-dialog": "0.0.8",
+    "ga-4-react": "^0.1.281",
+    "js-file-download": "^0.4.12",
+    "jsonschema": "^1.4.0",
+    "lodash": "^4.17.21",
+    "nanoid": "^3.1.23",
+    "next": "^10.2.0",
+    "next-compose-plugins": "^2.2.1",
+    "next-i18next": "^8.1.0",
+    "next-pwa": "^5.2.12",
+    "paji-sdk": "^0.5.9",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-redux": "^7.2.2",
+    "use-async-effect": "^2.2.3"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@storybook/addon-actions": "^6.1.21",
+    "@storybook/addon-essentials": "^6.1.21",
+    "@storybook/addon-links": "^6.1.21",
+    "@storybook/react": "^6.1.21",
+    "babel-loader": "^8.2.2"
+  }
+}

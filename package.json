@@ -1,6 +1,12 @@
 {
   "name": "mysite-frontend",
   "private": true,
+  "description": "兩大類的個人網站",
+  "author": "兩大類 <marco79423@gmail.com>",
+  "scripts": {
+    "dev:all": "lerna run --parallel dev",
+    "build:all": "lerna run --stream build"
+  },
   "devDependencies": {
     "lerna": "^4.0.0"
   }
