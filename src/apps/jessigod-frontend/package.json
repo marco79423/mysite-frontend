@@ -1,0 +1,24 @@
+{
+  "name": "jessigod-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev -p 9002",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.11.2",
+    "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.57",
+    "axios": "^0.21.0",
+    "classnames": "^2.2.6",
+    "ga-4-react": "^0.1.281",
+    "next": "10.0.3",
+    "next-http-proxy-middleware": "^1.0.4",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-infinite-scroller": "^1.2.4",
+    "swr": "^0.3.9"
+  }
+}
