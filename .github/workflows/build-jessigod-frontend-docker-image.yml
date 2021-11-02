@@ -31,9 +31,9 @@ jobs:
           echo "VERSION=${VERSION}" >> $GITHUB_ENV
 
       - name: Build jessigod-frontend image
-        working-directory: ./src/apps/jessigod-frontend
         run: |
           docker build \
+          --file build/jessigod-frontend.Dockerfile \
           --tag marco79423/jessigod-frontend:latest \
           .
 
