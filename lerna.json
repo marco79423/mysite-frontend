@@ -3,5 +3,11 @@
     "src/apps/*",
     "src/packages/*"
   ],
-  "version": "independent"
+  "version": "independent",
+  "command": {
+    "version": {
+      "allowBranch": "main",
+      "conventionalCommits": true
+    }
+  }
 }
