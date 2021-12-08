@@ -1,0 +1,40 @@
+{
+  "name": "@paji-sdk/utils",
+  "version": "0.13.0",
+  "description": "JavaScript 開發工具包",
+  "author": "兩大類 <marco79423@gmail.com>",
+  "homepage": "https://github.com/marco79423/paji-sdk.js#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marco79423/paji-sdk.js.git"
+  },
+  "license": "ISC",
+  "main": "dist/index.esm.js",
+  "module": "dist/index.umd.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist/*"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "pretest": "npm run build",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch --notify"
+  },
+  "dependencies": {
+    "nanoid": "^3.1.25"
+  },
+  "devDependencies": {
+    "jest": "^27.1.0",
+    "rollup": "^2.56.3"
+  },
+  "jest": {
+    "preset": "rollup-jest"
+  },
+  "gitHead": "edcfe4701d8dab6ae4388d298de712f2d420cdc6"
+}
