@@ -5,11 +5,7 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## 1.3.2 (2021-11-06)
 
-**Note:** Version bump only for package @app/jessiclient-frontend
-
-
-
-
+**Note:** Version bump only for package jessiclient-frontend
 
 ## [1.3.1](https://github.com/marco79423/mysite-frontend/compare/jessiclient-frontend@1.3.0...jessiclient-frontend@1.3.1) (2021-11-04)
 
