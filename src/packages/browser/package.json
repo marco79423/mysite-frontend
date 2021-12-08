@@ -3,13 +3,13 @@
   "version": "0.13.2",
   "description": "JavaScript 開發工具包",
   "author": "兩大類 <marco79423@gmail.com>",
-  "homepage": "https://github.com/marco79423/paji-sdk.js#readme",
+  "homepage": "https://github.com/marco79423/mysite-frontend/tree/main/src/packages/browser#readme",
   "publishConfig": {
     "access": "public"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/marco79423/paji-sdk.js.git"
+    "url": "git+https://github.com/marco79423/mysite-frontend.git"
   },
   "license": "ISC",
   "main": "dist/index.esm.js",

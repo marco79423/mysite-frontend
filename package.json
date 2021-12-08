@@ -3,6 +3,14 @@
   "private": true,
   "description": "兩大類的個人網站",
   "author": "兩大類 <marco79423@gmail.com>",
+  "homepage": "https://github.com/marco79423/mysite-frontend#readme",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/marco79423/mysite-frontend.git"
+  },
   "scripts": {
     "kill-ports": "kill-port --port 9001,9002,9003,9004",
     "dev:all": "npm run kill-ports && lerna run --parallel dev",
