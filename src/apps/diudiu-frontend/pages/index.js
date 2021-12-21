@@ -1,12 +1,10 @@
 import React from 'react'
 import Head from 'next/head'
-import {Canvas, extend, useFrame, useThree} from '@react-three/fiber'
+import {Canvas} from '@react-three/fiber'
 import {CssBaseline} from '@material-ui/core'
-import {OrbitControls} from 'three/examples/jsm/controls/OrbitControls'
 
 import useWindowSize from '../components/hooks/useWindowSize'
-
-extend({OrbitControls})
+import {OrbitControls} from '@react-three/drei'
 
 export default function Index() {
   const {width, height} = useWindowSize()
@@ -24,22 +22,10 @@ export default function Index() {
   </>)
 }
 
-function CameraControls() {
-  // Get a reference to the Three.js Camera, and the canvas html element.
-  // We need these to setup the OrbitControls component.
-  // https://threejs.org/docs/#examples/en/controls/OrbitControls
-  const {camera, gl: {domElement}} = useThree()
-
-  // Ref to the controls, so that we can update them on every frame using useFrame
-  const controls = React.useRef()
-  useFrame((state) => controls.current.update())
-  return <orbitControls ref={controls} args={[camera, domElement]}/>
-}
-
 function DiceBox({width, height}) {
   return (
     <Canvas style={{height, width}} shadows>
-      <CameraControls/>
+      <OrbitControls/>
       <axesHelper/>
       <ambientLight color={0xf0f5fb}/>
       <spotLight
