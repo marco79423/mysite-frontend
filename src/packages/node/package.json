@@ -1,6 +1,6 @@
 {
   "name": "@paji-sdk/node",
-  "version": "0.13.2",
+  "version": "0.14.0",
   "description": "JavaScript 開發工具包",
   "author": "兩大類 <marco79423@gmail.com>",
   "homepage": "https://github.com/marco79423/mysite-frontend/tree/main/src/packages/node#readme",
@@ -27,7 +27,7 @@
     "test:watch": "jest --watch --notify"
   },
   "dependencies": {
-    "@paji-sdk/utils": "^0.13.1",
+    "@paji-sdk/utils": "^0.14.0",
     "ioredis": "^4.27.9",
     "mongodb": "^4.1.1",
     "nats": "^2.2.0",
