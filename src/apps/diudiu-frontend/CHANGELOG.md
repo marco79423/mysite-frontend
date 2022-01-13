@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.2.0...diudiu-frontend@0.3.0) (2022-01-13)
+
+
+### Features
+
+* **diudiu-frontend:** 新增基本功能 ([dfa283a](https://github.com/marco79423/mysite-frontend/commit/dfa283a06e2695cd9b3bb430f81b67a56bcf1a7d))
+
+
+
+
+
 # 0.2.0 (2022-01-10)
 
 
