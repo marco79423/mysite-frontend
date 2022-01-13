@@ -1,15 +1,24 @@
-import React, {useRef} from 'react'
+import React from 'react'
 import Head from 'next/head'
 import {Canvas} from '@react-three/fiber'
 import {Physics, useBox, usePlane} from '@react-three/cannon'
-import CameraIcon from '@mui/icons-material/PhotoCamera'
 import useWindowSize from '../components/hooks/useWindowSize'
-import {OrbitControls, PerspectiveCamera, RoundedBox, useHelper} from '@react-three/drei'
-import {CameraHelper} from 'three'
-import {AppBar, Box, Button, CssBaseline, Grid, Link, Toolbar, Typography} from '@mui/material'
+import {OrbitControls, PerspectiveCamera, RoundedBox} from '@react-three/drei'
+
+import {
+  AppBar,
+  Box,
+  Button,
+  CssBaseline,
+  Dialog, DialogActions, DialogContent,
+  DialogTitle,
+  Fab,
+  Toolbar,
+  Typography
+} from '@mui/material'
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import CasinoIcon from '@mui/icons-material/Casino'
-import orange from '@material-ui/core/colors/orange'
+import {orange} from '@mui/material/colors'
 
 const theme = createTheme({
   palette: {
@@ -24,10 +33,26 @@ const theme = createTheme({
 export default function Index() {
   const {width, height} = useWindowSize()
   const [dice, setDice] = React.useState([])
+  const [open, setOpen] = React.useState(false);
+
+  const dieCount = dice.length
 
   const addDie = () => {
     setDice([...dice, <Die position={[0, -3.5, 5]}
                            velocity={[20 * Math.random() - 20 * Math.random(), 20 + 20 * Math.random(), -20 * Math.random()]}/>])
+  }
+
+  const showDialog = () => {
+    setOpen(true)
+  }
+
+  const hideDialog = () => {
+    setOpen(false)
+  }
+
+  const clearDice = () => {
+    setDice([])
+    hideDialog()
   }
 
   return (
@@ -54,22 +79,22 @@ export default function Index() {
 
               <Box sx={{flexGrow: 1}}/>
               <nav style={{display: 'flex', alignItem: 'center'}}>
-                <Link
-                  variant="button"
-                  color="text.primary"
-                  href="#"
-                  sx={{my: 1, mx: 1.5}}
-                >
-                  分類
-                </Link>
-                <Link
-                  variant="button"
-                  color="text.primary"
-                  href="#"
-                  sx={{my: 1, mx: 1.5}}
-                >
-                  台灣名人骰
-                </Link>
+                {/*<Link*/}
+                {/*  variant="button"*/}
+                {/*  color="text.primary"*/}
+                {/*  href="#"*/}
+                {/*  sx={{my: 1, mx: 1.5}}*/}
+                {/*>*/}
+                {/*  分類*/}
+                {/*</Link>*/}
+                {/*<Link*/}
+                {/*  variant="button"*/}
+                {/*  color="text.primary"*/}
+                {/*  href="#"*/}
+                {/*  sx={{my: 1, mx: 1.5}}*/}
+                {/*>*/}
+                {/*  台灣名人骰*/}
+                {/*</Link>*/}
               </nav>
               <Box sx={{flexGrow: 1}}/>
               <Button href="#" variant="outlined" sx={{my: 1, mx: 1.5}}>
@@ -86,8 +111,26 @@ export default function Index() {
               alignItems: 'center',
             }}>
             <Box sx={{flexGrow: 1}}/>
-            <Box sx={{flex: 1}}>
-              <Button onClick={addDie} variant="contained" style={{zIndex: 9, fontSize: '3rem'}}>丟</Button>
+            <Box sx={{flex: 1, position: 'relative'}}>
+              <Fab color="primary" aria-label="丟" onClick={addDie} style={{zIndex: 9, fontSize: '3rem', width: 80, height: 80}}>
+                丟
+              </Fab>
+
+              <Fab color="secondary" variant="extended" aria-label="丟" onClick={showDialog}
+                   style={{zIndex: 9, fontSize: '2rem', position: 'fixed', right: 32, bottom: 32}}>
+                統計
+              </Fab>
+
+              <Dialog onClose={hideDialog} open={open}>
+                <DialogTitle sx={{ m: 0, p: 2 }}>統計</DialogTitle>
+                <DialogContent dividers>
+                  <Typography>你丟了： {dieCount} 次</Typography>
+                </DialogContent>
+                <DialogActions>
+                  <Button variant="contained" onClick={clearDice}>清空</Button>
+                  <Button variant="contained" autoFocus onClick={hideDialog}>確認</Button>
+                </DialogActions>
+              </Dialog>
             </Box>
           </Box>
           <Canvas style={{position: 'absolute', height, width, background: 'lightblue'}} shadows>
