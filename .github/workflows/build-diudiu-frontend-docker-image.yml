@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - diudiu-frontend@*
-    branches:
-      - diudiu/**
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest

@@ -4,8 +4,6 @@ on:
   push:
     tags:
       - jessiclient-frontend@*
-    branches:
-      - jessiclient/**
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
