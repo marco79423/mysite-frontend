@@ -1,0 +1,61 @@
+{
+  "name": "blog-frontend",
+  "version": "1.0.1",
+  "description": "兩大類的個人網站",
+  "author": "兩大類 <marco79423@gmail.com>",
+  "license": "BSD-3-Clause",
+  "scripts": {
+    "dev": "next dev -p 9001",
+    "build": "next build",
+    "start": "next start",
+    "test": "jest test .",
+    "test:watch": "jest test --watch .",
+    "test:coverage": "jest test --coverage ."
+  },
+  "dependencies": {
+    "@paji-sdk/browser": "^0.13.0",
+    "axios": "^0.23.0",
+    "dateformat": "^3.0.2",
+    "error": "10.4.0",
+    "escape-html": "^1.0.3",
+    "feed": "^2.0.2",
+    "lodash": "^4.17.4",
+    "next": "11.1.2",
+    "next-redux-wrapper": "^7.0.5",
+    "polished": "^1.9.0",
+    "prop-types": "^15.5.8",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^7.2.5",
+    "react-share": "^4.4.0",
+    "redux": "^4.1.1",
+    "redux-actions": "^2.0.1",
+    "reselect": "^3.0.0",
+    "styled-components": "^4.4.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "jest": "^27.2.4",
+    "jest-styled-components": "^6.3.1",
+    "react-test-renderer": "^17.0.2"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "jest": {
+    "testEnvironment": "jsdom",
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}"
+    ],
+    "coverageReporters": [
+      "html"
+    ]
+  }
+}
