@@ -1,4 +1,4 @@
-# 傑西神教 jessigod
+# 傑西神教福音
 
 ![jessigod](./logo.jpg)
 

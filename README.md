@@ -3,9 +3,9 @@
 ## 專案列表
 
 * [兩大類的技術手記](./src/apps/blog-frontend/README.md)
-* [Jessigod Frontend](./src/apps/jessigod-frontend/README.md)
-* [Jessiclient Frontend](./src/apps/jessiclient-frontend/README.md)
-* [DiuDiu Frontend](./src/apps/diudiu-frontend/README.md)
+* [西卡神教福音](./src/apps/jessigod-frontend/README.md)
+* [Jessiclient](./src/apps/jessiclient-frontend/README.md)
+* [丟丟](./src/apps/diudiu-frontend/README.md)
 
 ## 套件列表
 

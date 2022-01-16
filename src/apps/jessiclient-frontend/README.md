@@ -1,4 +1,4 @@
-# jessiclient
+# Jessiclient
 
 ![jessiclient](./logo.jpg)
 
