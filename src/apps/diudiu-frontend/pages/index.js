@@ -60,7 +60,7 @@ export default function Index() {
       <Head>
         <title>丟丟</title>
         <meta name="description" content="丟丟"/>
-        <meta name="viewport" content="initial-scale=1, width=device-width"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
         <link rel="icon" href="/favicon.ico"/>
@@ -69,13 +69,15 @@ export default function Index() {
       <CssBaseline/>
 
       <ThemeProvider theme={theme}>
-        <Box sx={{position: 'absolute', display: 'flex', flexDirection: 'column', width, height}}>
+        <Box sx={{position: 'absolute', display: 'flex', touchAction: 'none', flexDirection: 'column', width, height}}>
           <Box component={AppBar} position="relative" sx={{zIndex: 1}}>
             <Toolbar>
               <CasinoIcon sx={{mr: 2}}/>
-              <Typography variant="h6" color="inherit" noWrap>
-                丟丟
-              </Typography>
+              <Box sx={{userSelect: 'none'}}>
+                <Typography variant="h6" color="inherit" noWrap>
+                  丟丟
+                </Typography>
+              </Box>
 
               <Box sx={{flexGrow: 1}}/>
               <nav style={{display: 'flex', alignItem: 'center'}}>
@@ -112,12 +114,12 @@ export default function Index() {
             }}>
             <Box sx={{flexGrow: 1}}/>
             <Box sx={{flex: 1, position: 'relative'}}>
-              <Fab color="primary" aria-label="丟" onClick={addDie} style={{zIndex: 9, fontSize: '3rem', width: 80, height: 80}}>
+              <Fab color="primary" aria-label="丟" onClick={addDie} style={{zIndex: 9, fontSize: '3rem', width: 80, height: 80, userSelect: 'none'}}>
                 丟
               </Fab>
 
               <Fab color="secondary" variant="extended" aria-label="丟" onClick={showDialog}
-                   style={{zIndex: 9, fontSize: '2rem', position: 'fixed', right: 32, bottom: 32}}>
+                   style={{zIndex: 9, fontSize: '2rem', position: 'fixed', right: 32, bottom: 32, userSelect: 'none'}}>
                 統計
               </Fab>
 
