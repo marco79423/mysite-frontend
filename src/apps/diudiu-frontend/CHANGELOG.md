@@ -3,6 +3,19 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.4.0](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.3.0...diudiu-frontend@0.4.0) (2022-01-21)
+
+
+### Features
+
+* **diudiu-frontend:** 改進手機使用者的體驗 ([90334e6](https://github.com/marco79423/mysite-frontend/commit/90334e6fe33f09ca0284172e60489f15fa411692))
+* **diudiu-frontend:** 新增加速度偵測 ([0422dcf](https://github.com/marco79423/mysite-frontend/commit/0422dcfc7f61dbd405c05fb6a859d537a84afb1e))
+* **diudiu-frontend:** 新增開發者模式 ([7d39fa2](https://github.com/marco79423/mysite-frontend/commit/7d39fa2854aabdda725f4e58c1e3f9e62f813550))
+
+
+
+
+
 # [0.3.0](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.2.0...diudiu-frontend@0.3.0) (2022-01-13)
 
 
