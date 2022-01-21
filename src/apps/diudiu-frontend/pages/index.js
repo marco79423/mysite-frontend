@@ -19,7 +19,8 @@ import {
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import CasinoIcon from '@mui/icons-material/Casino'
 import {orange} from '@mui/material/colors'
-import {createGlobalState, useList, useMotion, useToggle} from 'react-use'
+import {createGlobalState, useList, useToggle} from 'react-use'
+import useMotion from '../components/hooks/useMotion'
 
 const theme = createTheme({
   palette: {
@@ -46,18 +47,6 @@ export default function Index() {
 
   const dieCount = dice.length
 
-  const [message, setMessageessage] = React.useState('')
-  React.useEffect(() => {
-    if (typeof window.DeviceMotionEvent.requestPermission === 'function') {
-      window.DeviceMotionEvent.requestPermission()
-        .then(response => {
-          setMessageessage(response)
-        })
-        .catch(e => {
-          setMessageessage(e)
-        })
-    }
-  })
 
   const addDie = () => {
     push(<Die
@@ -103,7 +92,7 @@ export default function Index() {
                   丟丟
                 </Typography>
               </Box>
-              {a}|{b}|{message}
+              {a}|{b}|{state.granted ? 'granted': 'denied'}
               <Box sx={{flexGrow: 1}}/>
               <nav style={{display: 'flex', alignItem: 'center'}}>
                 {/*<Link*/}
