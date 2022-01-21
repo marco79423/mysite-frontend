@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.4.1](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.4.0...diudiu-frontend@0.4.1) (2022-01-21)
+
+
+### Bug Fixes
+
+* **diudiu-frontend:** 修正 motion 的寫法 ([9e56b2b](https://github.com/marco79423/mysite-frontend/commit/9e56b2b6a4e875890147a1e889db4daf81d8c381))
+
+
+
+
+
 # [0.4.0](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.3.0...diudiu-frontend@0.4.0) (2022-01-21)
 
 
