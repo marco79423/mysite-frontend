@@ -42,11 +42,6 @@ export default function Index() {
   const [on, toggle] = useToggle(false)
   const [developerMode, setDeveloperMode] = useDeveloperMode()
   const state = useMotion()
-  const a = Math.pow(state.acceleration.x, 2) + Math.pow(state.acceleration.y, 2) + Math.pow(state.acceleration.y, 3)
-  const b = Math.pow(state.accelerationIncludingGravity.x, 2) + Math.pow(state.accelerationIncludingGravity.y, 2) + Math.pow(state.accelerationIncludingGravity.y, 3)
-
-  const dieCount = dice.length
-
 
   const addDie = () => {
     push(<Die
@@ -54,6 +49,23 @@ export default function Index() {
       velocity={[20 * Math.random() - 20 * Math.random(), 20 + 20 * Math.random(), -20 * Math.random()]}
     />)
   }
+
+  const moving = Math.pow(state.acceleration.x, 2) + Math.pow(state.acceleration.y, 2) + Math.pow(state.acceleration.y, 3) > 10
+  const [addWait, setAddWait] = React.useState(false)
+  React.useEffect(() => {
+    if(moving) {
+      setAddWait(true)
+    }
+  }, [moving])
+
+  React.useEffect(() => {
+    if(addWait && !moving) {
+      addDie()
+      setAddWait(false)
+    }
+  }, [addWait, moving])
+
+  const dieCount = dice.length
 
   const showDialog = () => {
     toggle(true)
@@ -92,7 +104,7 @@ export default function Index() {
                   丟丟
                 </Typography>
               </Box>
-              {a}|{b}|{state.granted ? 'granted': 'denied'}
+              {moving ? 'true': 'false'}|{state.granted ? 'granted': 'denied'}
               <Box sx={{flexGrow: 1}}/>
               <nav style={{display: 'flex', alignItem: 'center'}}>
                 {/*<Link*/}
