@@ -19,7 +19,7 @@ import {
 import {createTheme, ThemeProvider} from '@mui/material/styles'
 import CasinoIcon from '@mui/icons-material/Casino'
 import {orange} from '@mui/material/colors'
-import {createGlobalState, useList, useToggle} from 'react-use'
+import {createGlobalState, useList, useMotion, useToggle} from 'react-use'
 
 const theme = createTheme({
   palette: {
@@ -40,8 +40,24 @@ export default function Index() {
 
   const [on, toggle] = useToggle(false)
   const [developerMode, setDeveloperMode] = useDeveloperMode()
+  const state = useMotion()
+  const a = Math.pow(state.acceleration.x, 2) + Math.pow(state.acceleration.y, 2) + Math.pow(state.acceleration.y, 3)
+  const b = Math.pow(state.accelerationIncludingGravity.x, 2) + Math.pow(state.accelerationIncludingGravity.y, 2) + Math.pow(state.accelerationIncludingGravity.y, 3)
 
   const dieCount = dice.length
+
+  const [message, setMessageessage] = React.useState('')
+  React.useEffect(() => {
+    if (typeof window.DeviceMotionEvent.requestPermission === 'function') {
+      window.DeviceMotionEvent.requestPermission()
+        .then(response => {
+          setMessageessage(response)
+        })
+        .catch(e => {
+          setMessageessage(e)
+        })
+    }
+  })
 
   const addDie = () => {
     push(<Die
@@ -62,6 +78,7 @@ export default function Index() {
     clear()
     hideDialog()
   }
+
 
   return (
     <>
@@ -86,7 +103,7 @@ export default function Index() {
                   丟丟
                 </Typography>
               </Box>
-
+              {a}|{b}|{message}
               <Box sx={{flexGrow: 1}}/>
               <nav style={{display: 'flex', alignItem: 'center'}}>
                 {/*<Link*/}
@@ -112,9 +129,9 @@ export default function Index() {
                                                    onChange={(e) => setDeveloperMode(e.target.checked)}/>}
                                   label="開發者模式"/>
               </FormGroup>
-              <Button href="#" variant="outlined" sx={{my: 1, mx: 1.5}}>
-                我的
-              </Button>
+              {/*<Button href="#" variant="outlined" sx={{my: 1, mx: 1.5}}>*/}
+              {/*  我的*/}
+              {/*</Button>*/}
             </Toolbar>
           </Box>
           <Box
