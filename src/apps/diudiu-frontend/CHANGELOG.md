@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.5.0](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.4.1...diudiu-frontend@0.5.0) (2022-01-21)
+
+
+### Features
+
+* **diudiu-frontend:** 新增支援手機丟丟 ([a939860](https://github.com/marco79423/mysite-frontend/commit/a93986045000e74fb987ae89b1cad07916b57304))
+
+
+
+
+
 ## [0.4.1](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.4.0...diudiu-frontend@0.4.1) (2022-01-21)
 
 
