@@ -53,13 +53,13 @@ export default function Index() {
   const moving = Math.pow(state.acceleration.x, 2) + Math.pow(state.acceleration.y, 2) + Math.pow(state.acceleration.y, 3) > 10
   const [addWait, setAddWait] = React.useState(false)
   React.useEffect(() => {
-    if(moving) {
+    if (moving) {
       setAddWait(true)
     }
   }, [moving])
 
   React.useEffect(() => {
-    if(addWait && !moving) {
+    if (addWait && !moving) {
       addDie()
       setAddWait(false)
     }
@@ -104,7 +104,7 @@ export default function Index() {
                   丟丟
                 </Typography>
               </Box>
-              {moving ? 'true': 'false'}|{state.granted ? 'granted': 'denied'}
+              {moving ? 'true' : 'false'}|{state.granted ? 'granted' : 'denied'}
               <Box sx={{flexGrow: 1}}/>
               <nav style={{display: 'flex', alignItem: 'center'}}>
                 {/*<Link*/}
@@ -184,10 +184,10 @@ export default function Index() {
 
               <Desk/>
 
-              <BarrierTop/>
-              <BarrierBottom/>
-              <BarrierLeft/>
-              <BarrierRight/>
+              <PlaneTop/>
+              <PlaneBottom/>
+              <PlaneLeft/>
+              <PlaneRight/>
 
               {dice}
             </Physics>
@@ -224,7 +224,7 @@ function Die({position, velocity, ...props}) {
   </RoundedBox>)
 }
 
-function BarrierTop(props) {
+function PlaneTop(props) {
   const [ref] = usePlane(() => ({position: [0, 4, 4], rotation: [Math.PI / 2, 0, 0]}))
   const [developerMode] = useDeveloperMode()
 
@@ -236,7 +236,7 @@ function BarrierTop(props) {
   )
 }
 
-function BarrierBottom(props) {
+function PlaneBottom(props) {
   const [ref] = usePlane(() => ({position: [0, -4, 4], rotation: [-Math.PI / 2, 0, 0]}))
   const [developerMode] = useDeveloperMode()
 
@@ -248,7 +248,7 @@ function BarrierBottom(props) {
   )
 }
 
-function BarrierLeft(props) {
+function PlaneLeft(props) {
   const [ref] = usePlane(() => ({position: [-4, 0, 4], rotation: [0, Math.PI / 2, 0]}))
   const [developerMode] = useDeveloperMode()
 
@@ -260,7 +260,7 @@ function BarrierLeft(props) {
   )
 }
 
-function BarrierRight(props) {
+function PlaneRight(props) {
   const [ref] = usePlane(() => ({position: [4, 0, 4], rotation: [0, -Math.PI / 2, 0]}))
   const [developerMode] = useDeveloperMode()
 
