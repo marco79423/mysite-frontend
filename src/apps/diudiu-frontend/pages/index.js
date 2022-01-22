@@ -1,9 +1,10 @@
 import React from 'react'
 import Head from 'next/head'
+import * as THREE from 'three'
 import {Canvas} from '@react-three/fiber'
 import {Physics, useBox, usePlane} from '@react-three/cannon'
 import useWindowSize from '../components/hooks/useWindowSize'
-import {OrbitControls, PerspectiveCamera, RoundedBox} from '@react-three/drei'
+import {OrbitControls, PerspectiveCamera, Box as BBox} from '@react-three/drei'
 
 import {
   AppBar,
@@ -209,10 +210,36 @@ function Desk(props) {
   )
 }
 
+const calculateTextureSize = (approx) => {
+  return Math.pow(2, Math.floor(Math.log(approx) / Math.log(2)))
+}
+
+const createTextTexture = (text, color, backColor) => {
+  const size = 100
+  const textMargin = 1
+
+  const canvas = document.createElement('canvas')
+  const context = canvas.getContext('2d')
+  const ts = calculateTextureSize(size + size * 2 * textMargin) * 2
+  canvas.width = canvas.height = ts
+  context.font = ts / (1 + 2 * textMargin) + 'pt Arial'
+  context.fillStyle = backColor
+  context.fillRect(0, 0, canvas.width, canvas.height)
+  context.textAlign = 'center'
+  context.textBaseline = 'middle'
+  context.fillStyle = color
+  context.fillText(text, canvas.width / 2, canvas.height / 2)
+
+  const texture = new THREE.CanvasTexture(canvas)
+  texture.needsUpdate = true
+
+  return texture
+}
+
 function Die({position, velocity, ...props}) {
   const [ref] = useBox(() => ({mass: 1, position: position, velocity: velocity}))
 
-  return (<RoundedBox
+  return (<BBox
     {...props}
     ref={ref}
     castShadow={true}
@@ -220,8 +247,10 @@ function Die({position, velocity, ...props}) {
     radius={0.1}
     smoothness={4}
   >
-    <meshStandardMaterial color={'#202020'}/>
-  </RoundedBox>)
+    {Array.from(Array(6)).map((_, i) => (
+      <meshPhongMaterial attachArray="material" map={createTextTexture(i + 1, 'white', '#202020')} key={i} />
+    ))}
+  </BBox>)
 }
 
 function PlaneTop(props) {
