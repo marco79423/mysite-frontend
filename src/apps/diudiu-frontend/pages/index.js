@@ -4,16 +4,22 @@ import * as THREE from 'three'
 import {Canvas} from '@react-three/fiber'
 import {Physics, useBox, usePlane} from '@react-three/cannon'
 import useWindowSize from '../components/hooks/useWindowSize'
-import {OrbitControls, PerspectiveCamera, Box as BBox} from '@react-three/drei'
+import {Box as BBox, OrbitControls, PerspectiveCamera} from '@react-three/drei'
+import {generateID} from '@paji-sdk/utils'
 
 import {
   AppBar,
   Box,
   Button,
   CssBaseline,
-  Dialog, DialogActions, DialogContent,
+  Dialog,
+  DialogActions,
+  DialogContent,
   DialogTitle,
-  Fab, FormControlLabel, FormGroup, Switch,
+  Fab,
+  FormControlLabel,
+  FormGroup,
+  Switch,
   Toolbar,
   Typography
 } from '@mui/material'
@@ -34,7 +40,32 @@ const theme = createTheme({
 })
 
 const useDeveloperMode = createGlobalState(false)
+const useDiceState = createGlobalState({})
 
+// function getDieNumber(die) {
+//   console.log('==== begin')
+//   const vector = new THREE.Vector3(0, 0, 1)
+//
+//   let closest_face = null
+//   let closest_angle = Math.PI * 2
+//   for (let i = 0; i < die.geometry.groups.length; ++i) {
+//     console.log('i', i)
+//     const face = die.geometry.groups[i]
+//     const angle = face.normal.clone().applyQuaternion(die.body.quaternion).angleTo(vector)
+//     console.log('angle', angle)
+//
+//     if (angle < closest_angle) {
+//       closest_angle = angle;
+//       closest_face = face;
+//     }
+//
+//     console.log('angle / closest_angle', angle, closest_angle)
+//   }
+//   const index = closest_face.materialIndex - 1
+//   console.log('index', index)
+//   console.log('==== end')
+//   return index
+// }
 
 export default function Index() {
   const {width, height} = useWindowSize()
@@ -42,13 +73,19 @@ export default function Index() {
 
   const [on, toggle] = useToggle(false)
   const [developerMode, setDeveloperMode] = useDeveloperMode()
+  const [diceState] = useDiceState()
   const state = useMotion()
 
+ const stopped = Object.values(diceState).filter(moving => moving).length === 0
+
   const addDie = () => {
-    push(<Die
-      position={[0, -3.5, 5]}
-      velocity={[20 * Math.random() - 20 * Math.random(), 20 + 20 * Math.random(), -20 * Math.random()]}
-    />)
+    push(
+      <Die
+        key={generateID()}
+        position={[0, -3.5, 5]}
+        velocity={[20 * Math.random() - 20 * Math.random(), 20 + 20 * Math.random(), -20 * Math.random()]}
+      />
+    )
   }
 
   const moving = Math.pow(state.acceleration.x, 2) + Math.pow(state.acceleration.y, 2) + Math.pow(state.acceleration.y, 3) > 10
@@ -105,7 +142,7 @@ export default function Index() {
                   丟丟
                 </Typography>
               </Box>
-              {moving ? 'true' : 'false'}|{state.granted ? 'granted' : 'denied'}
+              {moving ? 'true' : 'false'}|{state.granted ? 'granted' : 'denied'}|{stopped ? 'stopped' : 'moving'}
               <Box sx={{flexGrow: 1}}/>
               <nav style={{display: 'flex', alignItem: 'center'}}>
                 {/*<Link*/}
@@ -236,21 +273,32 @@ const createTextTexture = (text, color, backColor) => {
   return texture
 }
 
-function Die({position, velocity, ...props}) {
-  const [ref] = useBox(() => ({mass: 1, position: position, velocity: velocity}))
+function Die({key, position, velocity, ...props}) {
+  const [ref, api] = useBox(() => ({mass: 1, position: position, velocity: velocity}))
+  const [diceState, setDiceState] = useDiceState()
 
-  return (<BBox
-    {...props}
-    ref={ref}
-    castShadow={true}
-    position={[0, 0, 0.5]}
-    radius={0.1}
-    smoothness={4}
-  >
-    {Array.from(Array(6)).map((_, i) => (
-      <meshPhongMaterial attachArray="material" map={createTextTexture(i + 1, 'white', '#202020')} key={i} />
-    ))}
-  </BBox>)
+  React.useEffect(() => {
+    api.velocity.subscribe(v => {
+      const [x, y, z] = v
+      const moving = Math.abs(x) + Math.abs(y) + Math.abs(z) > 0.5
+      setDiceState({...diceState, [key]: moving})
+    })
+  }, [])
+
+  return (
+    <BBox
+      {...props}
+      ref={ref}
+      castShadow={true}
+      position={[0, 0, 0.5]}
+      radius={0.1}
+      smoothness={4}
+    >
+      {Array.from(Array(6)).map((_, i) => (
+        <meshPhongMaterial attachArray="material" map={createTextTexture(i + 1, 'white', '#202020')} key={i}/>
+      ))}
+    </BBox>
+  )
 }
 
 function PlaneTop(props) {
