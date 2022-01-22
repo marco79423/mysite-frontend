@@ -27,11 +27,13 @@ export default function useMotion() {
   React.useEffect(() => {
     if (typeof window.DeviceMotionEvent.requestPermission === 'function') {
       window.DeviceMotionEvent.requestPermission()
-        .then(response => {
+        .then(() => {
           setGranted(true)
         })
+    } else {
+      setGranted(true)
     }
-  })
+  }, [])
 
   React.useEffect(() => {
     const handler = (event) => {
