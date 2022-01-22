@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.5.1](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.5.0...diudiu-frontend@0.5.1) (2022-01-22)
+
+
+### Bug Fixes
+
+* **diudiu-frontend:** 修正 android 無法正常偵測 device motion 的問題 ([c562030](https://github.com/marco79423/mysite-frontend/commit/c5620307c3392aa26f4a2e3c58799ace1c019819))
+
+
+
+
+
+
 # [0.5.0](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.4.1...diudiu-frontend@0.5.0) (2022-01-21)
 
 
