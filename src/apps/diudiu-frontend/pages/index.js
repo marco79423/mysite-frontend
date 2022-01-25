@@ -1,11 +1,12 @@
 import React from 'react'
 import Head from 'next/head'
 import * as THREE from 'three'
-import {Canvas} from '@react-three/fiber'
+import {addAfterEffect, addEffect, Canvas} from '@react-three/fiber'
 import {Physics, useBox, usePlane} from '@react-three/cannon'
 import useWindowSize from '../components/hooks/useWindowSize'
 import {Box as BBox, OrbitControls, PerspectiveCamera} from '@react-three/drei'
 import {generateID} from '@paji-sdk/utils'
+import StatsImpl from 'stats.js'
 
 import {
   AppBar,
@@ -232,6 +233,8 @@ export default function Index() {
           </Canvas>
         </Box>
       </ThemeProvider>
+
+      {developerMode ? <Stats/> : null}
     </>
   )
 }
@@ -278,7 +281,7 @@ function Die({key, position, velocity, ...props}) {
   const [diceState, setDiceState] = useDiceState()
 
   React.useEffect(() => {
-    api.velocity.subscribe(v => {
+    return api.velocity.subscribe(v => {
       const [x, y, z] = v
       const moving = Math.abs(x) + Math.abs(y) + Math.abs(z) > 0.5
       setDiceState({...diceState, [key]: moving})
@@ -347,4 +350,61 @@ function PlaneRight(props) {
       <meshPhongMaterial color={developerMode ? 'green' : null}/>
     </mesh>
   )
+}
+
+function Stats() {
+  React.useEffect(() => {
+    const stats = new StatsImpl()
+    const node = document.body
+    stats.showPanel(0)
+    stats.dom.style.top = null
+    stats.dom.style.bottom = '0'
+    node?.appendChild(stats.dom)
+
+    const begin = addEffect(() => stats.begin())
+    const end = addAfterEffect(() => stats.end())
+    return () => {
+      node?.removeChild(stats.dom)
+      begin()
+      end()
+    }
+  }, [])
+
+  React.useEffect(() => {
+    const stats = new StatsImpl()
+    const node = document.body
+    stats.showPanel(1)
+    stats.dom.style.top = null
+    stats.dom.style.bottom = 0
+    stats.dom.style.left = '80px'
+    node?.appendChild(stats.dom)
+
+    const begin = addEffect(() => stats.begin())
+    const end = addAfterEffect(() => stats.end())
+    return () => {
+      node?.removeChild(stats.dom)
+      begin()
+      end()
+    }
+  }, [])
+
+  React.useEffect(() => {
+    const stats = new StatsImpl()
+    const node = document.body
+    stats.showPanel(2)
+    stats.dom.style.top = null
+    stats.dom.style.bottom = 0
+    stats.dom.style.left = '160px'
+    node?.appendChild(stats.dom)
+
+    const begin = addEffect(() => stats.begin())
+    const end = addAfterEffect(() => stats.end())
+    return () => {
+      node?.removeChild(stats.dom)
+      begin()
+      end()
+    }
+  }, [])
+
+  return null
 }

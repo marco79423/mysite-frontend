@@ -22,6 +22,7 @@
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-use": "^17.3.2",
+    "stats.js": "^0.17.0",
     "three": "^0.135.0"
   },
   "devDependencies": {
