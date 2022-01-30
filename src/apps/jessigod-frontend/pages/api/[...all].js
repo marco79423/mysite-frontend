@@ -1,7 +1,7 @@
 import getConfig from 'next/config'
 import httpProxyMiddleware from 'next-http-proxy-middleware'
 
-const { serverRuntimeConfig } = getConfig()
+const {serverRuntimeConfig} = getConfig()
 
 export const config = {
   api: {
@@ -12,5 +12,11 @@ export const config = {
 export default (req, res) => (
   httpProxyMiddleware(req, res, {
     target: serverRuntimeConfig.backendUrl,
+    pathRewrite: [
+      {
+        patternStr: '^/api',
+        replaceStr: '/api/jessigod'
+      }
+    ],
   })
 )
