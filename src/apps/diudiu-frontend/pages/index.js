@@ -7,6 +7,7 @@ import useWindowSize from '../components/hooks/useWindowSize'
 import {Box as BBox, OrbitControls, PerspectiveCamera} from '@react-three/drei'
 import {generateID} from '@paji-sdk/utils'
 import StatsImpl from 'stats.js'
+import {Controls, useControl, withControls} from 'react-three-gui'
 
 import {
   AppBar,
@@ -69,24 +70,54 @@ const useDiceState = createGlobalState({})
 //   return index
 // }
 
+const WrappedCanvas = withControls(Canvas)
+
 export default function Index() {
+  return (
+    <>
+      <Head>
+        <title>丟丟</title>
+        <meta name="description" content="丟丟"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+        <link rel="icon" href="/favicon.ico"/>
+      </Head>
+
+      <CssBaseline/>
+
+      <ThemeProvider theme={theme}>
+        <Controls.Provider>
+          <App/>
+        </Controls.Provider>
+      </ThemeProvider>
+    </>
+  )
+}
+
+function App() {
   const router = useRouter()
-  React.useEffect(()=>{
-    if(!router.isReady) {
+
+  React.useEffect(() => {
+    if (!router.isReady) {
       return
     }
     setDeveloperMode(!!router.query.dev)
-  }, [router.isReady]);
+  }, [router.isReady])
 
   const {width, height} = useWindowSize()
   const [dice, {push, clear}] = useList()
+  const showStats = useControl('顯示 FPS', {
+    type: 'boolean',
+  });
+
 
   const [on, toggle] = useToggle(false)
   const [developerMode, setDeveloperMode] = useDeveloperMode()
   const [diceState] = useDiceState()
   const state = useMotion()
 
- const stopped = Object.values(diceState).filter(moving => moving).length === 0
+  const stopped = Object.values(diceState).filter(moving => moving).length === 0
 
   const addDie = () => {
     push(
@@ -128,117 +159,104 @@ export default function Index() {
     hideDialog()
   }
 
-
   return (
     <>
-      <Head>
-        <title>丟丟</title>
-        <meta name="description" content="丟丟"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-        <link rel="icon" href="/favicon.ico"/>
-      </Head>
-
-      <CssBaseline/>
-
-      <ThemeProvider theme={theme}>
-        <Box sx={{position: 'absolute', display: 'flex', touchAction: 'none', flexDirection: 'column', width, height}}>
-          <Box component={AppBar} position="relative" sx={{zIndex: 1}}>
-            <Toolbar>
-              <CasinoIcon sx={{mr: 2}}/>
-              <Box sx={{userSelect: 'none'}}>
-                <Typography variant="h6" color="inherit" noWrap>
-                  丟丟
-                </Typography>
-              </Box>
-              {moving ? 'true' : 'false'}|{state.granted ? 'granted' : 'denied'}|{stopped ? 'stopped' : 'moving'}
-              <Box sx={{flexGrow: 1}}/>
-              <nav style={{display: 'flex', alignItem: 'center'}}>
-                {/*<Link*/}
-                {/*  variant="button"*/}
-                {/*  color="text.primary"*/}
-                {/*  href="#"*/}
-                {/*  sx={{my: 1, mx: 1.5}}*/}
-                {/*>*/}
-                {/*  分類*/}
-                {/*</Link>*/}
-                {/*<Link*/}
-                {/*  variant="button"*/}
-                {/*  color="text.primary"*/}
-                {/*  href="#"*/}
-                {/*  sx={{my: 1, mx: 1.5}}*/}
-                {/*>*/}
-                {/*  台灣名人骰*/}
-                {/*</Link>*/}
-              </nav>
-              <Box sx={{flexGrow: 1}}/>
-              {/*<Button href="#" variant="outlined" sx={{my: 1, mx: 1.5}}>*/}
-              {/*  我的*/}
-              {/*</Button>*/}
-            </Toolbar>
-          </Box>
-          <Box
-            component="main"
-            sx={{
-              flex: 1,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}>
-            <Box sx={{flexGrow: 1}}/>
-            <Box sx={{flex: 1, position: 'relative'}}>
-              <Fab color="primary" aria-label="丟" onClick={addDie}
-                   style={{zIndex: 9, fontSize: '3rem', width: 80, height: 80, userSelect: 'none'}}>
-                丟
-              </Fab>
-
-              <Fab color="secondary" variant="extended" aria-label="丟" onClick={showDialog}
-                   style={{zIndex: 9, fontSize: '2rem', position: 'fixed', right: 32, bottom: 32, userSelect: 'none'}}>
-                統計
-              </Fab>
-
-              <Dialog onClose={hideDialog} open={on}>
-                <DialogTitle sx={{m: 0, p: 2}}>統計</DialogTitle>
-                <DialogContent dividers>
-                  <Typography>你丟了： {dieCount} 次</Typography>
-                </DialogContent>
-                <DialogActions>
-                  <Button variant="contained" onClick={clearDice}>清空</Button>
-                  <Button variant="contained" autoFocus onClick={hideDialog}>確認</Button>
-                </DialogActions>
-              </Dialog>
+      <Box sx={{position: 'absolute', display: 'flex', touchAction: 'none', flexDirection: 'column', width, height}}>
+        <Box component={AppBar} position="relative" sx={{zIndex: 1}}>
+          <Toolbar>
+            <CasinoIcon sx={{mr: 2}}/>
+            <Box sx={{userSelect: 'none'}}>
+              <Typography variant="h6" color="inherit" noWrap>
+                丟丟
+              </Typography>
             </Box>
-          </Box>
-          <Canvas style={{position: 'absolute', height, width, background: 'lightblue'}} shadows>
-            <Physics gravity={[0, 0, -10]} defaultContactMaterial={{friction: 0.01, restitution: 0.5}}>
-              {developerMode && <OrbitControls/>}
-              {developerMode && <axesHelper/>}
-
-              <PerspectiveCamera makeDefault position={[0, 0, 10]}/>
-              <ambientLight color={0xf0f5fb}/>
-              <spotLight
-                color={0xefdfd5}
-                intensity={20}
-                position={[-2, 2, 2]}
-                distance={5}
-                castShadow={true}
-              />
-
-              <Desk/>
-
-              <PlaneTop/>
-              <PlaneBottom/>
-              <PlaneLeft/>
-              <PlaneRight/>
-
-              {dice}
-            </Physics>
-          </Canvas>
+            {moving ? 'true' : 'false'}|{state.granted ? 'granted' : 'denied'}|{stopped ? 'stopped' : 'moving'}
+            <Box sx={{flexGrow: 1}}/>
+            <nav style={{display: 'flex', alignItem: 'center'}}>
+              {/*<Link*/}
+              {/*  variant="button"*/}
+              {/*  color="text.primary"*/}
+              {/*  href="#"*/}
+              {/*  sx={{my: 1, mx: 1.5}}*/}
+              {/*>*/}
+              {/*  分類*/}
+              {/*</Link>*/}
+              {/*<Link*/}
+              {/*  variant="button"*/}
+              {/*  color="text.primary"*/}
+              {/*  href="#"*/}
+              {/*  sx={{my: 1, mx: 1.5}}*/}
+              {/*>*/}
+              {/*  台灣名人骰*/}
+              {/*</Link>*/}
+            </nav>
+            <Box sx={{flexGrow: 1}}/>
+            {/*<Button href="#" variant="outlined" sx={{my: 1, mx: 1.5}}>*/}
+            {/*  我的*/}
+            {/*</Button>*/}
+          </Toolbar>
         </Box>
-      </ThemeProvider>
+        <Box
+          component="main"
+          sx={{
+            flex: 1,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}>
+          <Box sx={{flexGrow: 1}}/>
+          <Box sx={{flex: 1, position: 'relative'}}>
+            <Fab color="primary" aria-label="丟" onClick={addDie}
+                 style={{zIndex: 9, fontSize: '3rem', width: 80, height: 80, userSelect: 'none'}}>
+              丟
+            </Fab>
 
-      {developerMode ? <Stats/> : null}
+            <Fab color="secondary" variant="extended" aria-label="丟" onClick={showDialog}
+                 style={{zIndex: 9, fontSize: '2rem', position: 'fixed', right: 32, bottom: 32, userSelect: 'none'}}>
+              統計
+            </Fab>
+
+            <Dialog onClose={hideDialog} open={on}>
+              <DialogTitle sx={{m: 0, p: 2}}>統計</DialogTitle>
+              <DialogContent dividers>
+                <Typography>你丟了： {dieCount} 次</Typography>
+              </DialogContent>
+              <DialogActions>
+                <Button variant="contained" onClick={clearDice}>清空</Button>
+                <Button variant="contained" autoFocus onClick={hideDialog}>確認</Button>
+              </DialogActions>
+            </Dialog>
+          </Box>
+        </Box>
+        <WrappedCanvas style={{position: 'absolute', height, width, background: 'lightblue'}} shadows>
+          <Physics gravity={[0, 0, -10]} defaultContactMaterial={{friction: 0.01, restitution: 0.5}}>
+            {developerMode && <OrbitControls/>}
+            {developerMode && <axesHelper/>}
+
+            <PerspectiveCamera makeDefault position={[0, 0, 10]}/>
+            <ambientLight color={0xf0f5fb}/>
+            <spotLight
+              color={0xefdfd5}
+              intensity={20}
+              position={[-2, 2, 2]}
+              distance={5}
+              castShadow={true}
+            />
+
+            <Desk/>
+
+            <PlaneTop/>
+            <PlaneBottom/>
+            <PlaneLeft/>
+            <PlaneRight/>
+
+            {dice}
+          </Physics>
+        </WrappedCanvas>
+      </Box>
+
+      {developerMode && showStats ? <Stats/> : null}
+      {developerMode ? <Controls title="開發者控制台" style={{zIndex: 9999}}/> : null}
     </>
   )
 }
