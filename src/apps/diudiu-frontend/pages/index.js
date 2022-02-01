@@ -29,6 +29,7 @@ import CasinoIcon from '@mui/icons-material/Casino'
 import {orange} from '@mui/material/colors'
 import {createGlobalState, useList, useToggle} from 'react-use'
 import useMotion from '../components/hooks/useMotion'
+import {useRouter} from 'next/router'
 
 const theme = createTheme({
   palette: {
@@ -69,6 +70,14 @@ const useDiceState = createGlobalState({})
 // }
 
 export default function Index() {
+  const router = useRouter()
+  React.useEffect(()=>{
+    if(!router.isReady) {
+      return
+    }
+    setDeveloperMode(!!router.query.dev)
+  }, [router.isReady]);
+
   const {width, height} = useWindowSize()
   const [dice, {push, clear}] = useList()
 
@@ -164,11 +173,6 @@ export default function Index() {
                 {/*</Link>*/}
               </nav>
               <Box sx={{flexGrow: 1}}/>
-              <FormGroup>
-                <FormControlLabel control={<Switch color="secondary" checked={developerMode}
-                                                   onChange={(e) => setDeveloperMode(e.target.checked)}/>}
-                                  label="開發者模式"/>
-              </FormGroup>
               {/*<Button href="#" variant="outlined" sx={{my: 1, mx: 1.5}}>*/}
               {/*  我的*/}
               {/*</Button>*/}
