@@ -1,7 +1,7 @@
 import React from 'react'
 import Head from 'next/head'
 import * as THREE from 'three'
-import {addAfterEffect, addEffect, Canvas} from '@react-three/fiber'
+import {addAfterEffect, addEffect, Canvas, useFrame} from '@react-three/fiber'
 import {Physics, useBox, usePlane} from '@react-three/cannon'
 import useWindowSize from '../components/hooks/useWindowSize'
 import {Box as BBox, OrbitControls, PerspectiveCamera} from '@react-three/drei'
@@ -19,9 +19,6 @@ import {
   DialogContent,
   DialogTitle,
   Fab,
-  FormControlLabel,
-  FormGroup,
-  Switch,
   Toolbar,
   Typography
 } from '@mui/material'
@@ -44,31 +41,6 @@ const theme = createTheme({
 
 const useDeveloperMode = createGlobalState(false)
 const useDiceState = createGlobalState({})
-
-// function getDieNumber(die) {
-//   console.log('==== begin')
-//   const vector = new THREE.Vector3(0, 0, 1)
-//
-//   let closest_face = null
-//   let closest_angle = Math.PI * 2
-//   for (let i = 0; i < die.geometry.groups.length; ++i) {
-//     console.log('i', i)
-//     const face = die.geometry.groups[i]
-//     const angle = face.normal.clone().applyQuaternion(die.body.quaternion).angleTo(vector)
-//     console.log('angle', angle)
-//
-//     if (angle < closest_angle) {
-//       closest_angle = angle;
-//       closest_face = face;
-//     }
-//
-//     console.log('angle / closest_angle', angle, closest_angle)
-//   }
-//   const index = closest_face.materialIndex - 1
-//   console.log('index', index)
-//   console.log('==== end')
-//   return index
-// }
 
 const WrappedCanvas = withControls(Canvas)
 
@@ -293,7 +265,6 @@ const createTextTexture = (text, color, backColor) => {
   context.fillText(text, canvas.width / 2, canvas.height / 2)
 
   const texture = new THREE.CanvasTexture(canvas)
-  texture.needsUpdate = true
 
   return texture
 }
@@ -302,12 +273,45 @@ function Die({key, position, velocity, ...props}) {
   const [ref, api] = useBox(() => ({mass: 1, position: position, velocity: velocity}))
   const [diceState, setDiceState] = useDiceState()
 
+  const quaternion = React.useRef([0, 0, 0, 0])
+  React.useEffect(() => api.quaternion.subscribe(result => quaternion.current = result), [])
+
   React.useEffect(() => {
-    return api.velocity.subscribe(v => {
+    const unsubscribed = api.velocity.subscribe(v => {
       const [x, y, z] = v
       const moving = Math.abs(x) + Math.abs(y) + Math.abs(z) > 0.5
       setDiceState({...diceState, [key]: moving})
+
+      if (!moving) {
+        unsubscribed()
+
+        const [x, y, z, w] = quaternion.current
+        const posAttribute = ref.current.geometry.attributes.position
+        const indexAttribute = ref.current.geometry.index.array
+
+        let closestFace
+        let closestAngle = Math.PI * 2
+        for (let f = 0; f < 6; f++) {
+          const triangle = new THREE.Triangle(
+            new THREE.Vector3(posAttribute.getX(indexAttribute[0 + (f * 6)]), posAttribute.getY(indexAttribute[0 + (f * 6)]), posAttribute.getZ(indexAttribute[0 + (f * 6)])),
+            new THREE.Vector3(posAttribute.getX(indexAttribute[1 + (f * 6)]), posAttribute.getY(indexAttribute[1 + (f * 6)]), posAttribute.getZ(indexAttribute[1 + (f * 6)])),
+            new THREE.Vector3(posAttribute.getX(indexAttribute[2 + (f * 6)]), posAttribute.getY(indexAttribute[2 + (f * 6)]), posAttribute.getZ(indexAttribute[2 + (f * 6)])),
+          )
+          const v = new THREE.Vector3()
+          triangle.getNormal(v)
+          const angle = v.applyQuaternion(new THREE.Quaternion(x, y, z, w)).angleTo(new THREE.Vector3(0, 0, 1))
+          if (angle < closestAngle) {
+            closestFace = f
+            closestAngle = angle
+          }
+        }
+
+        console.log('value', closestFace + 1)
+
+      }
     })
+
+    return unsubscribed
   }, [])
 
   return (
