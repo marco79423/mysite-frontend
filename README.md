@@ -6,6 +6,7 @@
 * [西卡神教福音](./src/apps/jessigod-frontend/README.md)
 * [Jessiclient](./src/apps/jessiclient-frontend/README.md)
 * [丟丟](./src/apps/diudiu-frontend/README.md)
+* [關係計算機](./src/apps/relationship-calc/README.md)
 
 ## 套件列表
 

@@ -12,7 +12,7 @@
     "url": "git+https://github.com/marco79423/mysite-frontend.git"
   },
   "scripts": {
-    "kill-ports": "kill-port --port 9001,9002,9003,9004",
+    "kill-ports": "kill-port --port 9001,9002,9003,9004,9005",
     "dev:all": "npm run kill-ports && lerna run --parallel dev",
     "build:all": "lerna run --stream build"
   },
