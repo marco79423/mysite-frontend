@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.7.0](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.6.0...diudiu-frontend@0.7.0) (2022-02-17)
+
+
+### Features
+
+* **diudiu-frontend:** 完成判斷骰子的值的功能 ([57f0def](https://github.com/marco79423/mysite-frontend/commit/57f0def1795a81127a10f281fda857fdca5beca1))
+* **diudiu-frontend:** 改用參數決定開發者模式 ([eda1781](https://github.com/marco79423/mysite-frontend/commit/eda1781bdaa1e3ee38a72cdda66ac20e389c870a))
+* **diudiu-frontend:** 新增控制台功能 ([9660b00](https://github.com/marco79423/mysite-frontend/commit/9660b00ced78ba74d5d686fa7bbd49f98403ef74))
+
+
+
+
+
+
 # [0.6.0](https://github.com/marco79423/mysite-frontend/compare/diudiu-frontend@0.5.1...diudiu-frontend@0.6.0) (2022-01-30)
 
 

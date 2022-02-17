@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [0.3.0](https://github.com/marco79423/mysite-frontend/compare/jessigod-frontend@0.2.0...jessigod-frontend@0.3.0) (2022-02-17)
+
+
+### Features
+
+* **relationship-calc:** 完成概念 ([d6b6e34](https://github.com/marco79423/mysite-frontend/commit/d6b6e34253ccca373f3ca72dd7d386e24f213efc))
+
+
+
+
+
+
 # [0.2.0](https://github.com/marco79423/mysite-frontend/compare/jessigod-frontend@0.1.4...jessigod-frontend@0.2.0) (2022-01-30)
 
 
