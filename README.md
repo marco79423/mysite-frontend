@@ -2,6 +2,7 @@
 
 ## 專案列表
 
+* [兩大類的實驗室](./src/apps/lab/README.md)
 * [兩大類的技術手記](./src/apps/blog-frontend/README.md)
 * [西卡神教福音](./src/apps/jessigod-frontend/README.md)
 * [Jessiclient](./src/apps/jessiclient-frontend/README.md)
