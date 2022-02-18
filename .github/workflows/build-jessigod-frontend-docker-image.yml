@@ -1,11 +1,11 @@
-name: Build jessilcient frontend docker image
+name: Build jessigod frontend docker image
 
 on:
   push:
     tags:
       - jessigod-frontend@*
 jobs:
-  build-and-deploy:
+  build-jessigod-frontend:
     runs-on: ubuntu-latest
     steps:
       # 設定環境

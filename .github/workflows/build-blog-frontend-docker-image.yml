@@ -5,7 +5,7 @@ on:
     tags:
       - blog-frontend@*
 jobs:
-  build-and-deploy:
+  build-blog-frontend:
     runs-on: ubuntu-latest
     steps:
       # 設定環境

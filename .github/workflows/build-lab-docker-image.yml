@@ -5,7 +5,7 @@ on:
     tags:
       - lab@*
 jobs:
-  build-and-deploy:
+  build-lab:
     runs-on: ubuntu-latest
     steps:
       # 設定環境

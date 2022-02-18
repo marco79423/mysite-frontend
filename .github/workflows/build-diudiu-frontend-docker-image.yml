@@ -5,7 +5,7 @@ on:
     tags:
       - diudiu-frontend@*
 jobs:
-  build-and-deploy:
+  build-diudiu-frontend:
     runs-on: ubuntu-latest
     steps:
       # 設定環境

@@ -5,7 +5,7 @@ on:
     tags:
       - jessiclient-frontend@*
 jobs:
-  build-and-deploy:
+  build-jessiclient-frontend:
     runs-on: ubuntu-latest
     steps:
       # 設定環境
