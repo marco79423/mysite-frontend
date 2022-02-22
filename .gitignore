@@ -307,3 +307,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
+secret.env
