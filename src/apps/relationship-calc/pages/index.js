@@ -28,6 +28,7 @@ import {orange} from '@mui/material/colors'
 import {createGlobalState, useToggle} from 'react-use'
 import {useRouter} from 'next/router'
 import {TextGeometry} from 'three/examples/jsm/geometries/TextGeometry'
+import renderToCanvas from '../components/renderToCanvas'
 
 const theme = createTheme({
   palette: {
@@ -45,6 +46,30 @@ const WrappedCanvas = withControls(Canvas)
 extend({ TextGeometry })
 
 export default function Index() {
+
+  React.useEffect(() => {
+    const $style = document.createElement("style")
+    $style.id = 'styles'
+    $style.innerHTML = `
+      html {
+        box-sizing: border-box;
+      }
+
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+    `
+    document.head.appendChild($style);
+  }, [])
+
   return (
     <>
       <Head>
@@ -200,6 +225,7 @@ function Node({key, position, text, ...props}) {
     const context = canvas.getContext('2d')
     const ts = calculateTextureSize(size + size * 2 * textMargin) * 2
     canvas.width = canvas.height = ts
+    console.log(ts)
     context.font = ts / (1 + 2 * textMargin) + 'pt Arial'
     context.fillStyle = backColor
     context.fillRect(0, 0, canvas.width, canvas.height)
@@ -207,6 +233,21 @@ function Node({key, position, text, ...props}) {
     context.textBaseline = 'middle'
     context.fillStyle = color
     context.fillText(text, canvas.width / 2, canvas.height / 2)
+
+    const texture = new THREE.CanvasTexture(canvas)
+
+    return texture
+  }
+
+  const createTextTexture2 = (text, color, backColor) => {
+    const canvas = document.createElement('canvas')
+    canvas.width = canvas.height = 512
+    renderToCanvas({
+      canvas,
+      width: 512,
+      height: 512,
+      Component: () => <div style={{color, background: backColor}}>{text}</div>
+    })
 
     const texture = new THREE.CanvasTexture(canvas)
 
@@ -222,7 +263,7 @@ function Node({key, position, text, ...props}) {
       onPointerOver={() => setHovered(true)}
       onPointerOut={() => setHovered(false)}
     >
-      <meshPhongMaterial attach="material" map={createTextTexture(text, 'white', '#202020')}
+      <meshPhongMaterial attach="material" map={createTextTexture2(text, 'white', '#202020')}
                          color={hovered ? 'green' : 'blue'}/>
     </Circle>
   )

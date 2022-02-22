@@ -6,7 +6,6 @@ import {Physics, useBox, usePlane} from '@react-three/cannon'
 import useWindowSize from '../components/hooks/useWindowSize'
 import {Box as BBox, OrbitControls, PerspectiveCamera} from '@react-three/drei'
 import {generateID} from '@paji-sdk/utils'
-import StatsImpl from 'stats.js'
 import {Controls, useControl, withControls} from 'react-three-gui'
 
 import {
@@ -28,6 +27,8 @@ import {orange} from '@mui/material/colors'
 import {createGlobalState, useList, useToggle} from 'react-use'
 import useMotion from '../components/hooks/useMotion'
 import {useRouter} from 'next/router'
+import Stats from '../containers/Stats'
+import Barrier from '../components/diebox/Barrier'
 
 const theme = createTheme({
   palette: {
@@ -81,7 +82,7 @@ function App() {
   const [dice, {push, clear}] = useList()
   const showStats = useControl('顯示 FPS', {
     type: 'boolean',
-  });
+  })
 
 
   const [on, toggle] = useToggle(false)
@@ -330,107 +331,34 @@ function Die({key, position, velocity, ...props}) {
   )
 }
 
-function PlaneTop(props) {
-  const [ref] = usePlane(() => ({position: [0, 4, 4], rotation: [Math.PI / 2, 0, 0]}))
+function PlaneTop() {
   const [developerMode] = useDeveloperMode()
-
+  const color = developerMode ? 'blue' : null
   return (
-    <mesh{...props} ref={ref}>
-      <planeGeometry args={[8, 8]}/>
-      <meshPhongMaterial color={developerMode ? 'blue' : null}/>
-    </mesh>
+    <Barrier position={[0, 4, 4]} rotation={[Math.PI / 2, 0, 0]} size={[8, 8]} color={color}/>
   )
 }
 
-function PlaneBottom(props) {
-  const [ref] = usePlane(() => ({position: [0, -4, 4], rotation: [-Math.PI / 2, 0, 0]}))
+function PlaneBottom() {
   const [developerMode] = useDeveloperMode()
-
+  const color = developerMode ? 'blue' : null
   return (
-    <mesh{...props} ref={ref}>
-      <planeGeometry args={[8, 8]}/>
-      <meshPhongMaterial color={developerMode ? 'blue' : null}/>
-    </mesh>
+    <Barrier position={[0, -4, 4]} rotation={[-Math.PI / 2, 0, 0]} size={[8, 8]} color={color}/>
   )
 }
 
-function PlaneLeft(props) {
-  const [ref] = usePlane(() => ({position: [-4, 0, 4], rotation: [0, Math.PI / 2, 0]}))
+function PlaneLeft() {
   const [developerMode] = useDeveloperMode()
-
+  const color = developerMode ? 'green' : null
   return (
-    <mesh{...props} ref={ref}>
-      <planeGeometry args={[8, 8]}/>
-      <meshPhongMaterial color={developerMode ? 'green' : null}/>
-    </mesh>
+    <Barrier position={[-4, 0, 4]} rotation={[0, Math.PI / 2, 0]} size={[8, 8]} color={color}/>
   )
 }
 
-function PlaneRight(props) {
-  const [ref] = usePlane(() => ({position: [4, 0, 4], rotation: [0, -Math.PI / 2, 0]}))
+function PlaneRight() {
   const [developerMode] = useDeveloperMode()
-
+  const color = developerMode ? 'green' : null
   return (
-    <mesh{...props} ref={ref}>
-      <planeGeometry args={[8, 8]}/>
-      <meshPhongMaterial color={developerMode ? 'green' : null}/>
-    </mesh>
+    <Barrier position={[4, 0, 4]} rotation={[0, -Math.PI / 2, 0]} size={[8, 8]} color={color}/>
   )
-}
-
-function Stats() {
-  React.useEffect(() => {
-    const stats = new StatsImpl()
-    const node = document.body
-    stats.showPanel(0)
-    stats.dom.style.top = null
-    stats.dom.style.bottom = '0'
-    node?.appendChild(stats.dom)
-
-    const begin = addEffect(() => stats.begin())
-    const end = addAfterEffect(() => stats.end())
-    return () => {
-      node?.removeChild(stats.dom)
-      begin()
-      end()
-    }
-  }, [])
-
-  React.useEffect(() => {
-    const stats = new StatsImpl()
-    const node = document.body
-    stats.showPanel(1)
-    stats.dom.style.top = null
-    stats.dom.style.bottom = 0
-    stats.dom.style.left = '80px'
-    node?.appendChild(stats.dom)
-
-    const begin = addEffect(() => stats.begin())
-    const end = addAfterEffect(() => stats.end())
-    return () => {
-      node?.removeChild(stats.dom)
-      begin()
-      end()
-    }
-  }, [])
-
-  React.useEffect(() => {
-    const stats = new StatsImpl()
-    const node = document.body
-    stats.showPanel(2)
-    stats.dom.style.top = null
-    stats.dom.style.bottom = 0
-    stats.dom.style.left = '160px'
-    node?.appendChild(stats.dom)
-
-    const begin = addEffect(() => stats.begin())
-    const end = addAfterEffect(() => stats.end())
-    return () => {
-      node?.removeChild(stats.dom)
-      begin()
-      end()
-    }
-  }, [])
-
-  return null
 }
