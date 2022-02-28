@@ -7,23 +7,23 @@ export default function Base() {
   React.useEffect(() => {
     const container = document.getElementById('container')
 
-    // 設定 Renderer
+    // 建立繪製器 (Renderer)
     const renderer = new THREE.WebGLRenderer({antialias: true})
     renderer.setPixelRatio(window.devicePixelRatio)
     renderer.setSize(window.innerWidth, window.innerHeight)
     container.appendChild(renderer.domElement)
 
-    // 建立場景
+    // 建立場景 (Scene)
     const scene = new THREE.Scene()
 
-    // 建立相機
+    // 建立相機 (Camera)
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
     camera.position.set(0, 0, 5)
     camera.lookAt(new THREE.Vector3(0, 0, 0))
 
     // 建立模型、材質並放置到場景
     const cubeGeometry = new THREE.BoxGeometry()
-    const cubeMaterial = new THREE.MeshBasicMaterial({color: 0x00ff00})
+    const cubeMaterial = new THREE.MeshBasicMaterial({color: 'green'})
     const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
     scene.add(cube)
 
