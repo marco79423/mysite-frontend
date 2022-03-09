@@ -29,6 +29,7 @@ import useMotion from '../components/hooks/useMotion'
 import Stats from '../containers/Stats'
 import Barrier from '../components/diebox/Barrier'
 import useDeveloperMode from '../hooks/useDeveloperMode'
+import {Floor} from '../components/diebox/Floor'
 
 const theme = createTheme({
   palette: {
@@ -206,12 +207,20 @@ function App() {
               castShadow={true}
             />
 
-            <Desk/>
+            <Floor size={[8, 8]} color={0xdfdfdf}/>
 
-            <PlaneTop/>
-            <PlaneBottom/>
-            <PlaneLeft/>
-            <PlaneRight/>
+            {/* Top Barrier */}
+            <Barrier position={[0, 4, 4]} rotation={[Math.PI / 2, 0, 0]} size={[8, 8]}
+                     color={developerMode ? 'blue' : null}/>
+            {/* Bottom Barrier */}
+            <Barrier position={[0, -4, 4]} rotation={[-Math.PI / 2, 0, 0]} size={[8, 8]}
+                     color={developerMode ? 'blue' : null}/>
+            {/* Left Barrier */}
+            <Barrier position={[-4, 0, 4]} rotation={[0, Math.PI / 2, 0]} size={[8, 8]}
+                     color={developerMode ? 'green' : null}/>
+            {/* Right Barrier */}
+            <Barrier position={[4, 0, 4]} rotation={[0, -Math.PI / 2, 0]} size={[8, 8]}
+                     color={developerMode ? 'green' : null}/>
 
             {dice}
           </Physics>
@@ -221,17 +230,6 @@ function App() {
       {developerMode && showStats ? <Stats/> : null}
       {developerMode ? <Controls title="開發者控制台" style={{zIndex: 9999}}/> : null}
     </>
-  )
-}
-
-function Desk(props) {
-  const [ref] = usePlane(() => ({...props}))
-
-  return (
-    <mesh{...props} ref={ref} receiveShadow={true}>
-      <planeGeometry args={[8, 8]}/>
-      <meshPhongMaterial color={0xdfdfdf}/>
-    </mesh>
   )
 }
 
@@ -321,35 +319,3 @@ function Die({key, position, velocity, ...props}) {
   )
 }
 
-function PlaneTop() {
-  const developerMode = useDeveloperMode()
-  const color = React.useMemo(() => developerMode ? 'blue' : null, [developerMode])
-
-  return (
-    <Barrier position={[0, 4, 4]} rotation={[Math.PI / 2, 0, 0]} size={[8, 8]} color={color}/>
-  )
-}
-
-function PlaneBottom() {
-  const developerMode = useDeveloperMode()
-  const color = React.useMemo(() => developerMode ? 'blue' : null, [developerMode])
-  return (
-    <Barrier position={[0, -4, 4]} rotation={[-Math.PI / 2, 0, 0]} size={[8, 8]} color={color}/>
-  )
-}
-
-function PlaneLeft() {
-  const developerMode = useDeveloperMode()
-  const color = React.useMemo(() => developerMode ? 'green' : null, [developerMode])
-  return (
-    <Barrier position={[-4, 0, 4]} rotation={[0, Math.PI / 2, 0]} size={[8, 8]} color={color}/>
-  )
-}
-
-function PlaneRight() {
-  const developerMode = useDeveloperMode()
-  const color = React.useMemo(() => developerMode ? 'green' : null, [developerMode])
-  return (
-    <Barrier position={[4, 0, 4]} rotation={[0, -Math.PI / 2, 0]} size={[8, 8]} color={color}/>
-  )
-}
