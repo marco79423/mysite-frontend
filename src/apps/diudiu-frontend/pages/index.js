@@ -26,9 +26,9 @@ import CasinoIcon from '@mui/icons-material/Casino'
 import {orange} from '@mui/material/colors'
 import {createGlobalState, useList, useToggle} from 'react-use'
 import useMotion from '../components/hooks/useMotion'
-import {useRouter} from 'next/router'
 import Stats from '../containers/Stats'
 import Barrier from '../components/diebox/Barrier'
+import useDeveloperMode from '../hooks/useDeveloperMode'
 
 const theme = createTheme({
   palette: {
@@ -40,7 +40,6 @@ const theme = createTheme({
   },
 })
 
-const useDeveloperMode = createGlobalState(false)
 const useDiceState = createGlobalState({})
 
 const WrappedCanvas = withControls(Canvas)
@@ -69,15 +68,6 @@ export default function Index() {
 }
 
 function App() {
-  const router = useRouter()
-
-  React.useEffect(() => {
-    if (!router.isReady) {
-      return
-    }
-    setDeveloperMode(!!router.query.dev)
-  }, [router.isReady])
-
   const {width, height} = useWindowSize()
   const [dice, {push, clear}] = useList()
   const showStats = useControl('顯示 FPS', {
@@ -86,7 +76,7 @@ function App() {
 
 
   const [on, toggle] = useToggle(false)
-  const [developerMode, setDeveloperMode] = useDeveloperMode()
+  const developerMode = useDeveloperMode()
   const [diceState] = useDiceState()
   const state = useMotion()
 
@@ -332,32 +322,33 @@ function Die({key, position, velocity, ...props}) {
 }
 
 function PlaneTop() {
-  const [developerMode] = useDeveloperMode()
-  const color = developerMode ? 'blue' : null
+  const developerMode = useDeveloperMode()
+  const color = React.useMemo(() => developerMode ? 'blue' : null, [developerMode])
+
   return (
     <Barrier position={[0, 4, 4]} rotation={[Math.PI / 2, 0, 0]} size={[8, 8]} color={color}/>
   )
 }
 
 function PlaneBottom() {
-  const [developerMode] = useDeveloperMode()
-  const color = developerMode ? 'blue' : null
+  const developerMode = useDeveloperMode()
+  const color = React.useMemo(() => developerMode ? 'blue' : null, [developerMode])
   return (
     <Barrier position={[0, -4, 4]} rotation={[-Math.PI / 2, 0, 0]} size={[8, 8]} color={color}/>
   )
 }
 
 function PlaneLeft() {
-  const [developerMode] = useDeveloperMode()
-  const color = developerMode ? 'green' : null
+  const developerMode = useDeveloperMode()
+  const color = React.useMemo(() => developerMode ? 'green' : null, [developerMode])
   return (
     <Barrier position={[-4, 0, 4]} rotation={[0, Math.PI / 2, 0]} size={[8, 8]} color={color}/>
   )
 }
 
 function PlaneRight() {
-  const [developerMode] = useDeveloperMode()
-  const color = developerMode ? 'green' : null
+  const developerMode = useDeveloperMode()
+  const color = React.useMemo(() => developerMode ? 'green' : null, [developerMode])
   return (
     <Barrier position={[4, 0, 4]} rotation={[0, -Math.PI / 2, 0]} size={[8, 8]} color={color}/>
   )
