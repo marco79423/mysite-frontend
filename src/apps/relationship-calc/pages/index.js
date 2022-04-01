@@ -43,12 +43,12 @@ const theme = createTheme({
 const useDeveloperMode = createGlobalState(false)
 const WrappedCanvas = withControls(Canvas)
 
-extend({ TextGeometry })
+extend({TextGeometry})
 
 export default function Index() {
 
   React.useEffect(() => {
-    const $style = document.createElement("style")
+    const $style = document.createElement('style')
     $style.id = 'styles'
     $style.innerHTML = `
       html {
@@ -67,7 +67,7 @@ export default function Index() {
         padding: 0;
       }
     `
-    document.head.appendChild($style);
+    document.head.appendChild($style)
   }, [])
 
   return (
@@ -111,24 +111,66 @@ function App() {
   const [on, toggle] = useToggle(false)
   const [developerMode, setDeveloperMode] = useDeveloperMode()
 
-  const showDialog = () => {
-    toggle(true)
-  }
-
-  const hideDialog = () => {
-    toggle(false)
-  }
-
-  const clearDice = () => {
-    hideDialog()
-  }
-
   const dir = new THREE.Vector3(0, 1, 0)
   const origin = new THREE.Vector3(0, 30, 0)
   const length = 100
   const hex = 'green'
   const headLength = 20
   const headWidth = 20
+
+  React.useEffect(() => {
+    const container = document.getElementById('container')
+
+    // 建立繪製器 (Renderer)
+    const renderer = new THREE.WebGLRenderer({antialias: true})
+    renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    container.appendChild(renderer.domElement)
+
+    // 建立場景 (Scene)
+    const scene = new THREE.Scene()
+
+    // 建立相機 (Camera)
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    camera.position.set(0, 0, 10)
+    camera.lookAt(new THREE.Vector3(0, 0, 0))
+
+    const ambientLight = new THREE.AmbientLight(0xf0f5fb, 100)
+    scene.add(ambientLight)
+
+    // 建立模型、材質並放置到場景
+    // const cubeGeometry = new THREE.BoxGeometry()
+    // const cubeMaterial = new THREE.MeshBasicMaterial({color: 'green'})
+    // const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
+    // scene.add(cube)
+
+    const createNode = (text) => {
+      const [radius, segments] = [1, 64]
+      // const [hovered, setHovered] = React.useState(false)
+      const nodeGeometry = new THREE.CircleGeometry(radius, segments)
+      const nodeMaterial = new THREE.MeshPhongMaterial({
+        color: 'blue',
+        map: createTextTexture(text, 'white', '#202020')
+      })
+
+      return new THREE.Mesh(nodeGeometry, nodeMaterial)
+    }
+
+    scene.add(createNode('我'))
+
+
+    // 繪製循環
+    const animate = function () {
+      // cube.rotation.x += 0.01
+      // cube.rotation.y += 0.01
+
+      renderer.render(scene, camera)
+
+      requestAnimationFrame(animate)
+    }
+
+    animate()
+  }, [])
 
   return (
     <>
@@ -143,49 +185,24 @@ function App() {
             </Box>
           </Toolbar>
         </Box>
-        <Box
-          component="main"
-          sx={{
-            flex: 1,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}>
-          <Box sx={{flexGrow: 1}}/>
-          <Box sx={{flex: 1, position: 'relative'}}>
-            <Fab color="secondary" variant="extended" aria-label="丟" onClick={showDialog}
-                 style={{zIndex: 9, fontSize: '2rem', position: 'fixed', right: 32, bottom: 32, userSelect: 'none'}}>
-              統計
-            </Fab>
 
-            <Dialog onClose={hideDialog} open={on}>
-              <DialogTitle sx={{m: 0, p: 2}}>統計</DialogTitle>
-              <DialogContent dividers>
-                <Typography>你丟了： 次</Typography>
-              </DialogContent>
-              <DialogActions>
-                <Button variant="contained" onClick={clearDice}>清空</Button>
-                <Button variant="contained" autoFocus onClick={hideDialog}>確認</Button>
-              </DialogActions>
-            </Dialog>
-          </Box>
-        </Box>
-        <WrappedCanvas style={{position: 'absolute', height, width, background: 'lightblue'}} shadows>
-          <MapControls/>
-          {/*<PerspectiveCamera makeDefault position={[0, 0, 10]}/>*/}
-          <OrthographicCamera makeDefault position={[0, 0, 10]}/>
-          <ambientLight color={0xf0f5fb} intensity={100}/>
+        <div id="container"/>
+        {/*  <WrappedCanvas style={{position: 'absolute', height, width, background: 'lightblue'}} shadows>*/}
+        {/*    <MapControls/>*/}
+        {/*    /!*<PerspectiveCamera makeDefault position={[0, 0, 10]}/>*!/*/}
+        {/*    <OrthographicCamera makeDefault position={[0, 0, 10]}/>*/}
+        {/*    <ambientLight color={0xf0f5fb} intensity={100}/>*/}
 
-          <arrowHelper args={[dir, origin, length, hex, headLength, headWidth]}/>
-          <Node text={'我'}/>
-          {/*<Text position={[15, 60, 0]} text={'Apple'}/>*/}
-          <Text position={[15, 60, 0]} text={'爸爸'}/>
-          <Node text={'父'} position={[0, 160, 0]}/>
-        </WrappedCanvas>
+        {/*    <arrowHelper args={[dir, origin, length, hex, headLength, headWidth]}/>*/}
+        {/*    <Node text={'我'}/>*/}
+        {/*    /!*<Text position={[15, 60, 0]} text={'Apple'}/>*!/*/}
+        {/*    <Text position={[15, 60, 0]} text={'爸爸'}/>*/}
+        {/*    <Node text={'父'} position={[0, 160, 0]}/>*/}
+        {/*  </WrappedCanvas>*/}
       </Box>
 
-      {developerMode && showStats ? <Stats/> : null}
-      {developerMode ? <Controls title="開發者控制台" style={{zIndex: 9999}}/> : null}
+      {/*{developerMode && showStats ? <Stats/> : null}*/}
+      {/*{developerMode ? <Controls title="開發者控制台" style={{zIndex: 9999}}/> : null}*/}
     </>
   )
 }
@@ -194,6 +211,26 @@ const calculateTextureSize = (approx) => {
   return Math.pow(2, Math.floor(Math.log(approx) / Math.log(2)))
 }
 
+const createTextTexture = (text, color, backColor) => {
+  const size = 100
+  const textMargin = 1
+
+  const canvas = document.createElement('canvas')
+  const context = canvas.getContext('2d')
+  const ts = calculateTextureSize(size + size * 2 * textMargin) * 2
+  canvas.width = canvas.height = ts
+  context.font = ts / (1 + 2 * textMargin) + 'pt Arial'
+  context.fillStyle = backColor
+  context.fillRect(0, 0, canvas.width, canvas.height)
+  context.textAlign = 'center'
+  context.textBaseline = 'middle'
+  context.fillStyle = color
+  context.fillText(text, canvas.width / 2, canvas.height / 2)
+
+  const texture = new THREE.CanvasTexture(canvas)
+
+  return texture
+}
 
 function Text({text, position, ...props}) {
   const font = new FontLoader().parse(setoFont)
