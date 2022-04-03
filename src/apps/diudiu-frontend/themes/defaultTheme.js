@@ -1,12 +1,13 @@
 import {createTheme} from '@material-ui/core'
+import {indigo, deepPurple} from '@material-ui/core/colors'
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: colorTable['indigo-600'],
+      main: indigo[600],
     },
     secondary: {
-      main: colorTable['deep-purple-600'],
+      main: deepPurple[600],
     },
   },
 })

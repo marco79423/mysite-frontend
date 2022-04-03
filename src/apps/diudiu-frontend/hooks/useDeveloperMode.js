@@ -1,20 +1,23 @@
-import {useRouter} from 'next/router'
 import React from 'react'
-import {createGlobalState} from 'react-use'
+import {useDispatch, useSelector} from 'react-redux'
+import {useRouter} from 'next/router'
 
-const useGlobalState = createGlobalState(null)
+import appSlice from '../slices/app'
+import {selectDeveloperMode} from '../selectors'
+
 
 export default function useDeveloperMode() {
   const router = useRouter()
-  const [globalState, setGlobalState] = useGlobalState()
+  const dispatch = useDispatch()
+  const developerMode = useSelector(selectDeveloperMode)
 
   React.useEffect(() => {
     if (!router || !router.isReady) {
       return
     }
 
-    setGlobalState(!!router.query.dev)
+    dispatch(appSlice.actions.setDeveloperMode(!!router.query.dev))
   }, [router && router.isReady])
 
-  return globalState
+  return developerMode
 }

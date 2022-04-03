@@ -1,10 +1,10 @@
 import React from 'react'
 import {Provider} from 'react-redux'
 import {ThemeProvider} from '@material-ui/core/styles'
-
-import store from '../../redux/store'
-import theme from '../../components/themes/defaultTheme'
 import {ProviderCompose} from '@paji-sdk/browser'
+
+import store from '../store'
+import theme from '../themes/defaultTheme'
 
 
 /**

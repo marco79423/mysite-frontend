@@ -1,3 +1,5 @@
+import React from 'react'
+
 // 參考做法： https://stackoverflow.com/questions/51504506/too-many-react-context-providers/58924810#58924810
 
 const ProviderCompose = {

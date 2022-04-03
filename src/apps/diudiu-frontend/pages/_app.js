@@ -1,8 +1,10 @@
 import React from 'react'
 import getConfig from 'next/config'
-import {appWithTranslation, useTranslation} from 'next-i18next'
 import Head from 'next/head'
+import {appWithTranslation, useTranslation} from 'next-i18next'
 import {CssBaseline} from '@material-ui/core'
+
+import AppProvider from '../containers/AppProvider'
 
 function App({Component, pageProps}) {
   const {publicRuntimeConfig} = getConfig()
@@ -55,7 +57,9 @@ function App({Component, pageProps}) {
 
       <CssBaseline/>
 
-      <Component {...pageProps} />
+      <AppProvider>
+        <Component {...pageProps} />
+      </AppProvider>
     </>
   )
 }

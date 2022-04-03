@@ -1,7 +1,7 @@
-import {usePlane} from '@react-three/cannon'
 import React from 'react'
+import {usePlane} from '@react-three/cannon'
 
-export function Floor({size, color, ...props}) {
+export default function Floor({size, color, ...props}) {
   const [ref] = usePlane(() => ({...props}))
 
   return (
