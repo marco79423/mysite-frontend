@@ -17,6 +17,9 @@ export default function RollingDiePage({dieTypeId}) {
     dispatch(dieTypeSlice.actions.setAll([
       {
         id: 1,
+        name: '普通六面骰',
+        description: '就是一個很普通的六面骰',
+        faces: [1, 2, 3, 4, 5, 6]
       }
     ]))
   })

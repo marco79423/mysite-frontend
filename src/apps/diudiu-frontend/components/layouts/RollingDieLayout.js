@@ -3,7 +3,6 @@ import {makeStyles} from '@material-ui/core'
 
 import useWindowSize from '../../hooks/useWindowSize'
 import Header from '../base/Header'
-import BaseLayout from './BaseLayout'
 
 
 const useStyles = makeStyles({
